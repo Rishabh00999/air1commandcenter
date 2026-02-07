@@ -6,7 +6,6 @@ const secondaryColor = '#823588';
 const accentPurple = '#c084fc';
 const accentGreen = '#48C9B0';
 
-// Data for all years
 const yearlyData = {
   2025: [
     { category: 'General', score: 177 },
@@ -34,7 +33,6 @@ const yearlyData = {
   ],
 };
 
-// Trend data for line chart
 const trendData = [
   { year: '2023', General: 187, EWS: 153, OBC: 131, SC: 90, ST: 43, 'PwD/DAP': 34 },
   { year: '2024', General: 186, EWS: 155, OBC: 130, SC: 98, ST: 60, 'PwD/DAP': 23 },
@@ -80,21 +78,43 @@ const IIMRanchiCutoff = ({ selectedYear: propYear }: IIMRanchiCutoffProps = {}) 
 
   return (
     <div className="min-h-screen bg-slate-950">
-      <div className="max-w-7xl mx-auto p-4 md:p-8">
+      <div className="max-w-7xl mx-auto p-3 md:p-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-2 text-orange-400">
+        <div className="text-center mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 text-orange-400 px-2">
             IIM Ranchi IPM Cutoff Data
           </h1>
-          <p className="text-slate-400 text-lg">Historical Cutoff Analysis (2023-2025)</p>
+          <p className="text-slate-400 text-sm md:text-lg">Historical Cutoff Analysis (2023-2025)</p>
         </div>
 
         {/* Bar Chart Section */}
-        <div className="bg-slate-900/40 rounded-2xl shadow-xl p-6 mb-8 border-t-4 border-orange-500">
-          <h2 className="text-2xl font-bold mb-6 text-orange-400">
-            Category-wise Cutoff Distribution - {selectedYear}
+        <div className="bg-slate-900/40 rounded-xl md:rounded-2xl shadow-xl p-3 md:p-6 mb-6 md:mb-8 border-t-4 border-orange-500">
+          <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-orange-400">
+            Category-wise Cutoff - {selectedYear}
           </h2>
-          <ResponsiveContainer width="100%" height={400}>
+          <ResponsiveContainer width="100%" height={300} className="md:hidden">
+            <BarChart data={currentData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+              <XAxis 
+                dataKey="category" 
+                tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                angle={-45}
+                textAnchor="end"
+                height={60}
+              />
+              <YAxis 
+                tick={{ fill: '#94a3b8', fontSize: 10 }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend 
+                wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }}
+                iconType="circle"
+                iconSize={8}
+              />
+              <Bar dataKey="score" name="Score" fill={primaryColor} radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="100%" height={400} className="hidden md:block">
             <BarChart data={currentData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis 
@@ -119,11 +139,35 @@ const IIMRanchiCutoff = ({ selectedYear: propYear }: IIMRanchiCutoffProps = {}) 
         </div>
 
         {/* Trend Line Chart */}
-        <div className="bg-slate-900/40 rounded-2xl shadow-xl p-6 mb-8 border-t-4 border-purple-500">
-          <h2 className="text-2xl font-bold mb-6 text-orange-400">
-            Cutoff Trends Across Years (2023-2025)
+        <div className="bg-slate-900/40 rounded-xl md:rounded-2xl shadow-xl p-3 md:p-6 mb-6 md:mb-8 border-t-4 border-purple-500">
+          <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6 text-orange-400">
+            Cutoff Trends (2023-2025)
           </h2>
-          <ResponsiveContainer width="100%" height={400}>
+          <ResponsiveContainer width="100%" height={300} className="md:hidden">
+            <LineChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+              <XAxis 
+                dataKey="year" 
+                tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+              />
+              <YAxis 
+                tick={{ fill: '#94a3b8', fontSize: 10 }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend 
+                wrapperStyle={{ paddingTop: '10px', fontSize: '9px' }}
+                iconType="line"
+                iconSize={10}
+              />
+              <Line type="monotone" dataKey="General" stroke={primaryColor} strokeWidth={2} dot={{ r: 3 }} />
+              <Line type="monotone" dataKey="EWS" stroke={accentPurple} strokeWidth={2} dot={{ r: 3 }} />
+              <Line type="monotone" dataKey="OBC" stroke={accentGreen} strokeWidth={2} dot={{ r: 3 }} />
+              <Line type="monotone" dataKey="SC" stroke="#E74C3C" strokeWidth={2} dot={{ r: 3 }} />
+              <Line type="monotone" dataKey="ST" stroke="#3498DB" strokeWidth={2} dot={{ r: 3 }} />
+              <Line type="monotone" dataKey="PwD/DAP" stroke={secondaryColor} strokeWidth={2} dot={{ r: 3 }} />
+            </LineChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="100%" height={400} className="hidden md:block">
             <LineChart data={trendData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis 
@@ -150,19 +194,19 @@ const IIMRanchiCutoff = ({ selectedYear: propYear }: IIMRanchiCutoffProps = {}) 
         </div>
 
         {/* Individual Year Table */}
-        <div className="bg-slate-900/40 rounded-2xl shadow-xl overflow-hidden border-t-4 border-purple-500">
-          <div className="p-6 border-b border-slate-800 bg-slate-900/60">
-            <h2 className="text-2xl font-bold text-orange-400">
+        <div className="bg-slate-900/40 rounded-xl md:rounded-2xl shadow-xl overflow-hidden border-t-4 border-purple-500">
+          <div className="p-4 md:p-6 border-b border-slate-800 bg-slate-900/60">
+            <h2 className="text-lg md:text-2xl font-bold text-orange-400">
               IIM Ranchi IPM {selectedYear} Cutoff Details
             </h2>
           </div>
           
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full text-xs md:text-sm">
               <thead>
                 <tr className="bg-slate-800">
-                  <th className="px-6 py-4 text-left text-white font-semibold text-sm">Category</th>
-                  <th className="px-6 py-4 text-center text-white font-semibold text-sm">Final Score</th>
+                  <th className="px-3 md:px-6 py-3 md:py-4 text-left text-white font-semibold">Category</th>
+                  <th className="px-3 md:px-6 py-3 md:py-4 text-center text-white font-semibold">Final Score</th>
                 </tr>
               </thead>
               <tbody>
@@ -173,9 +217,9 @@ const IIMRanchiCutoff = ({ selectedYear: propYear }: IIMRanchiCutoffProps = {}) 
                       index % 2 === 0 ? 'bg-slate-900/20' : 'bg-slate-900/40'
                     } hover:bg-slate-800/50`}
                   >
-                    <td className="px-6 py-4 font-semibold text-slate-200">{row.category}</td>
-                    <td className="px-6 py-4 text-center">
-                      <span className="font-bold text-lg text-orange-400">
+                    <td className="px-3 md:px-6 py-3 md:py-4 font-semibold text-slate-200">{row.category}</td>
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-center">
+                      <span className="font-bold text-base md:text-lg text-orange-400">
                         {row.score}
                       </span>
                     </td>
@@ -187,8 +231,8 @@ const IIMRanchiCutoff = ({ selectedYear: propYear }: IIMRanchiCutoffProps = {}) 
         </div>
 
         {/* Footer Note */}
-        <div className="mt-8 p-4 bg-slate-900/40 rounded-xl border-l-4 border-orange-500">
-          <p className="text-sm text-slate-300">
+        <div className="mt-6 md:mt-8 p-3 md:p-4 bg-slate-900/40 rounded-xl border-l-4 border-orange-500">
+          <p className="text-xs md:text-sm text-slate-300">
             <span className="font-semibold text-orange-400">Note:</span> All cutoff scores are based on official IIM Ranchi data. The final score is calculated based on a composite of IPMAT scores, academic performance, and other parameters as per IIM Ranchi's admission criteria.
           </p>
         </div>

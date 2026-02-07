@@ -11,6 +11,7 @@ import DeskSection  from './sections/DeskSection';
 // import { CollegeSection } from './sections/CollegeSection';
 import UnifiedCutoffsPage from './sections/cut-offs/UnifiedCutoffsPage';
 import  VideoAnalysisPage  from './sections/VideoAnalysisPage';
+import ContactPage from './sections/ContactSection';
 interface Props {
   activeTab: ResourceTab;
 }
@@ -33,7 +34,9 @@ export const ResourceContent: React.FC<Props> = ({ activeTab }) => {
       case ResourceTab.COLLEGES:
         return <UnifiedCutoffsPage />;
       case ResourceTab.VIDEO_HUB:
-        return <VideoAnalysisPage />;  
+        return <VideoAnalysisPage />; 
+      case ResourceTab.CONTACT:
+        return <ContactPage />;
       default:
         return <div className="text-white">Content for {activeTab} is coming soon!</div>;
     }

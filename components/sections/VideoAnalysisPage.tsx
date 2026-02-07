@@ -4,11 +4,20 @@ import { Play, X } from "lucide-react";
 export default function Component() {
   const videos = [
     {
-      id: 8,
-      title: "Quantitative Ability Strategy",
+      id: 7,
+      title: "Quantitative Ability Strategy - Part 1",
       url: "https://youtu.be/eyf981KeOA8",
       description: "Strategic approach to mastering Quantitative Ability",
       category: "Quantitative Aptitude",
+      subcategory: "Strategy",
+    },
+    {
+      id: 8,
+      title: "Quantitative Ability Strategy - Part 2",
+      url: "https://youtu.be/Q7lS5zdaOKM",
+      description: "Advanced strategies for Quantitative Ability",
+      category: "Quantitative Aptitude",
+      subcategory: "Strategy",
     },
     {
       id: 9,
@@ -16,6 +25,7 @@ export default function Component() {
       url: "https://youtu.be/3dvDC38kukA",
       description: "Deep dive into quadratic equations concepts and problems",
       category: "Quantitative Aptitude",
+      subcategory: "Quadratic Equation",
     },
     {
       id: 10,
@@ -23,6 +33,7 @@ export default function Component() {
       url: "https://youtu.be/bqVyQ3HBrOg",
       description: "Fundamental concepts of Profit and Loss",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 11,
@@ -30,6 +41,7 @@ export default function Component() {
       url: "https://youtu.be/YZMDCFTKFfM",
       description: "Advanced problems in Profit and Loss",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 12,
@@ -37,6 +49,7 @@ export default function Component() {
       url: "https://youtu.be/7PS5XjmvCUE",
       description: "Profit and Loss practice session",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 13,
@@ -44,6 +57,7 @@ export default function Component() {
       url: "https://youtu.be/QlLp-9OC4cM",
       description: "Solving complex Profit and Loss questions",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 14,
@@ -51,6 +65,7 @@ export default function Component() {
       url: "https://youtu.be/k65D2Hds_NA",
       description: "Key strategies for Profit and Loss",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 15,
@@ -58,6 +73,7 @@ export default function Component() {
       url: "https://youtu.be/GXD7Oy0Om-A",
       description: "Expert tips on Profit and Loss",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 16,
@@ -65,6 +81,7 @@ export default function Component() {
       url: "https://youtu.be/LALOnfFNZw0",
       description: "Profit and Loss detailed analysis",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 17,
@@ -72,6 +89,7 @@ export default function Component() {
       url: "https://youtu.be/HFRitg-WP5w",
       description: "Mastering Profit and Loss techniques",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 18,
@@ -79,6 +97,7 @@ export default function Component() {
       url: "https://youtu.be/kyHih58qXiE",
       description: "Profit and Loss exam-style questions",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 19,
@@ -86,6 +105,7 @@ export default function Component() {
       url: "https://youtu.be/80qyYOvl3Rk",
       description: "Important Profit and Loss concepts",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 20,
@@ -93,6 +113,7 @@ export default function Component() {
       url: "https://youtu.be/s4eh5zCbhHU",
       description: "Profit and Loss revision",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 21,
@@ -100,6 +121,7 @@ export default function Component() {
       url: "https://youtu.be/avUC8JUYe98",
       description: "Profit and Loss walkthrough",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 22,
@@ -107,6 +129,7 @@ export default function Component() {
       url: "https://youtu.be/IdIBDdx0Q84",
       description: "Profit and Loss solution strategies",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 23,
@@ -114,6 +137,7 @@ export default function Component() {
       url: "https://youtu.be/ps5o47GlS_c",
       description: "Profit and Loss deep dive",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 24,
@@ -121,6 +145,7 @@ export default function Component() {
       url: "https://youtu.be/h9A16WIMDDc",
       description: "Profit and Loss comprehensive guide",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 25,
@@ -128,6 +153,7 @@ export default function Component() {
       url: "https://youtu.be/g4VIisjj8z4",
       description: "Profit and Loss problem solving",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 26,
@@ -135,6 +161,7 @@ export default function Component() {
       url: "https://youtu.be/t73Mq-tfHlI",
       description: "Profit and Loss advanced techniques",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 27,
@@ -142,6 +169,7 @@ export default function Component() {
       url: "https://youtu.be/HIRuCORxBec",
       description: "Profit and Loss final review",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 28,
@@ -149,6 +177,7 @@ export default function Component() {
       url: "https://youtu.be/ZIaKnDqZ3cg",
       description: "Profit and Loss exam prep",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 29,
@@ -156,6 +185,7 @@ export default function Component() {
       url: "https://youtu.be/a8c0QrA6GlU",
       description: "Profit and Loss essential tips",
       category: "Quantitative Aptitude",
+      subcategory: "Profit and Loss",
     },
     {
       id: 30,
@@ -163,6 +193,7 @@ export default function Component() {
       url: "https://youtu.be/jpTFv9jjrw8",
       description: "Additional practice for QA",
       category: "Quantitative Aptitude",
+      subcategory: "Additional",
     },
     {
       id: 31,
@@ -170,6 +201,7 @@ export default function Component() {
       url: "https://youtu.be/dWZ7Il9ulug",
       description: "Supplementary QA problems",
       category: "Quantitative Aptitude",
+      subcategory: "Additional",
     },
     {
       id: 32,
@@ -177,6 +209,7 @@ export default function Component() {
       url: "https://youtu.be/OC18v4JIAtU",
       description: "More QA concepts explained",
       category: "Quantitative Aptitude",
+      subcategory: "Additional",
     },
     {
       id: 33,
@@ -184,6 +217,7 @@ export default function Component() {
       url: "https://youtu.be/A7YdgwCT8to",
       description: "Final set of QA questions",
       category: "Quantitative Aptitude",
+      subcategory: "Additional",
     },
     {
       id: 34,
@@ -208,15 +242,120 @@ export default function Component() {
     },
     {
       id: 37,
-      title: "Logical Reasoning Practice",
+      title: "Logical Reasoning Practice - Part 1",
       url: "https://youtu.be/AmKrUqMT5Y4",
       description: "In-depth practice session for Logical Reasoning",
       category: "Logical Reasoning",
+    },
+    {
+      id: 38,
+      title: "Logical Reasoning Practice - Part 2",
+      url: "https://youtu.be/-ncFrTLpDdI",
+      description: "Logical Reasoning concepts and practice",
+      category: "Logical Reasoning",
+    },
+    {
+      id: 39,
+      title: "Logical Reasoning Practice - Part 3",
+      url: "https://youtu.be/1HErDrnDcDg",
+      description: "Logical Reasoning concepts and practice",
+      category: "Logical Reasoning",
+    },
+    {
+      id: 40,
+      title: "Logical Reasoning Practice - Part 4",
+      url: "https://youtu.be/TXlAEJeOw_M",
+      description: "Logical Reasoning concepts and practice",
+      category: "Logical Reasoning",
+    },
+    {
+      id: 41,
+      title: "Logical Reasoning Practice - Part 5",
+      url: "https://youtu.be/YbfJdS15R2k",
+      description: "Logical Reasoning concepts and practice",
+      category: "Logical Reasoning",
+    },
+    {
+      id: 42,
+      title: "Logical Reasoning Practice - Part 6",
+      url: "https://youtu.be/KdgWjMNuOb8",
+      description: "Logical Reasoning concepts and practice",
+      category: "Logical Reasoning",
+    },
+    {
+      id: 43,
+      title: "Logical Reasoning Practice - Part 7",
+      url: "https://youtu.be/0y6FExnmmSo",
+      description: "Logical Reasoning concepts and practice",
+      category: "Logical Reasoning",
+    },
+    {
+      id: 44,
+      title: "Logical Reasoning Practice - Part 8",
+      url: "https://youtu.be/0RH1Rca8GlM",
+      description: "LogiAmKrUqMT5Y7cal Reasoning concepts and practice",
+      category: "Logical Reasoning",
+    },
+    {
+      id: 45,
+      title: "Logical Reasoning Practice - Part 9",
+      url: "https://youtu.be/J66BMKToX0c",
+      description: "Logical Reasoning concepts and practice",
+      category: "Logical Reasoning",
+    },
+    {
+      id: 46,
+      title: "Progression - Part 1",
+      url: "https://youtu.be/c1VKEiSGLcU",
+      description: "Progressions — Basics.",
+      category: "Quantitative Aptitude",
+      subcategory: "Progressions",
+    },
+    {
+      id: 47,
+      title: "Progression - Part 2",
+      url: "https://youtu.be/qWqGVkiNG60",
+      description: "Progressions — AP",
+      category: "Quantitative Aptitude",
+      subcategory: "Progressions",
+    },
+    {
+      id: 48,
+      title: "Progression - Part 3",
+      url: "https://youtu.be/4aywiBJqxZs",
+      description: "Progressions — GP",
+      category: "Quantitative Aptitude",
+      subcategory: "Progressions",
+    },
+    {
+      id: 49,
+      title: "Progression - Part 4",
+      url: "https://youtu.be/SCtG6ALDjuI",
+      description: "Progressions — HP",
+      category: "Quantitative Aptitude",
+      subcategory: "Progressions",
+    },
+    {
+      id: 50,
+      title: "Progression - Part 5",
+      url: "https://youtu.be/2HDvjo5E9gM",
+      description: "Progressions — Sum",
+      category: "Quantitative Aptitude",
+      subcategory: "Progressions",
+    },
+    {
+      id: 51,
+      title: "Progression - Part 6",
+      url: "https://youtu.be/sU4VBKg4glM",
+      description: "Progressions — AGP",
+      category: "Quantitative Aptitude",
+      subcategory: "Progressions",
     },
   ];
 
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [activeTab, setActiveTab] = useState("Quantitative Aptitude");
+  const [activeSubTab, setActiveSubTab] = useState("Strategy");
 
   const categories = [
     "Quantitative Aptitude",
@@ -224,7 +363,21 @@ export default function Component() {
     "Logical Reasoning",
   ];
 
-  const filteredVideos = videos.filter((video) => video.category === activeTab);
+  const quantSubcategories = [
+    "Strategy",
+    "Quadratic Equation",
+    // "Profit and Loss",
+    // "Additional",
+    "Progressions",
+  ];
+
+  const filteredVideos =
+    activeTab === "Quantitative Aptitude"
+      ? videos.filter(
+          (video) =>
+            video.category === activeTab && video.subcategory === activeSubTab
+        )
+      : videos.filter((video) => video.category === activeTab);
 
   const extractVideoId = (url) => {
     const regExp =
@@ -237,11 +390,6 @@ export default function Component() {
     <div className="min-h-screen bg-gray-900">
       <div className="relative max-w-7xl mx-auto px-4 pt-8 pb-12">
         <div className="text-center space-y-4 mb-12">
-          {/* <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-800 border border-purple-500/30 shadow-sm text-xs font-semibold uppercase tracking-widest text-purple-400">
-            <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
-            Video Analysis Hub
-          </div> */}
-
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white mt-2">
             Master Your <span className="text-purple-400">Preparation</span>
           </h1>
@@ -255,7 +403,12 @@ export default function Component() {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setActiveTab(category)}
+              onClick={() => {
+                setActiveTab(category);
+                if (category === "Quantitative Aptitude") {
+                  setActiveSubTab("Strategy");
+                }
+              }}
               className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
                 activeTab === category
                   ? "bg-purple-600 text-white shadow-lg shadow-purple-500/30 scale-105"
@@ -266,6 +419,24 @@ export default function Component() {
             </button>
           ))}
         </div>
+
+        {activeTab === "Quantitative Aptitude" && (
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {quantSubcategories.map((subcategory) => (
+              <button
+                key={subcategory}
+                onClick={() => setActiveSubTab(subcategory)}
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                  activeSubTab === subcategory
+                    ? "bg-yellow-500 text-gray-900 shadow-md"
+                    : "bg-gray-700 text-gray-300 hover:bg-gray-600 border border-gray-600"
+                }`}
+              >
+                {subcategory}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredVideos.map((video, index) => {

@@ -15,7 +15,7 @@ export const ResourceTabs: React.FC<Props> = ({ activeTab, setActiveTab }) => {
         <button
           key={tab.id}
           onClick={() => setActiveTab(tab.id as ResourceTab)}
-          className={`relative group flex items-center gap-2 px-5 py-3 rounded-2xl whitespace-nowrap transition-all duration-300 border ${
+          className={`relative group flex items-center gap-1 px-3 py-1.5 rounded-2xl whitespace-nowrap transition-all duration-300 border ${
             activeTab === tab.id
               ? "bg-slate-900 border-[#823588] text-white"
               : "bg-slate-900/40 border-slate-800/50 text-slate-400 hover:border-[#823588] hover:text-slate-200"

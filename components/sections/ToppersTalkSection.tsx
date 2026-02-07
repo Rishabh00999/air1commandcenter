@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Star,
   Quote,
@@ -13,10 +13,70 @@ import {
   ExternalLink,
   Download,
   TrendingUp,
+  Award,
+  BookOpen,
 } from "lucide-react";
 
 export default function Component() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [activeStorySlide, setActiveStorySlide] = useState(0);
+
+  // Add more students here - just copy this pattern and change the details
+  const successStories = [
+    {
+      name: "Akshat Attri",
+      title: "Less Stress, More Success",
+      quote:
+        "Consistency is better than intensity. One hour every day beats 12 hours once a week.",
+      stats: [
+        { icon: Clock, label: "100% Focus" },
+        { icon: Target, label: "Zero Burnout" },
+      ],
+      image: "/air1commandcenter/atri.jpeg", // Add student photo here
+      badge: "AIR 7",
+      // college: "IIM Indore '30",
+    },
+    {
+      name: "Nikhilesh Sanka",
+      title: "Work Smarter, Not Harder",
+      quote:
+        "Forget the 18-hour study grind. We're all about working smarter, staying consistent, and actually having a life while you prep.",
+      stats: [
+        { icon: Clock, label: "292/360" },
+        { icon: Target, label: "Consistency" },
+      ],
+      image: "/air1commandcenter/air1.png", // Change this to the student's photo path
+      badge: "AIR 1",
+      // college: "IIM Indore '30",
+    },
+
+    {
+      name: "Saketh Rimmalapuddi",
+      title: "Level Up Your Game.",
+      quote:
+        "The journey isn't just about the result; it's about the growth. Get whatever you need to own your future without the gatekeeping.",
+      stats: [
+        { icon: Clock, label: " Expert Mentorship" },
+        { icon: Target, label: "Strategic Practice" },
+      ],
+      image: "/air1commandcenter/Saketh.png", // Add student photo here
+      badge: "Indore '30",
+      // college: "IIM Indore '30",
+    },
+    {
+      name: "Sadhana S",
+      title: "Build Your Future.",
+      quote:
+        "Ditch the boring lectures. Join a community that actually gets the hustle and helps you cross the finish line on your own terms.",
+      stats: [
+        { icon: Clock, label: "Goal Oriented" },
+        { icon: Target, label: "Worth the Hustle" },
+      ],
+      image: "/air1commandcenter/sadhana.png", // Add student photo here
+      badge: "Indore '30 ",
+      // college: "IIM Indore '30",
+    },
+  ];
 
   const mockScores = [
     {
@@ -24,28 +84,7 @@ export default function Component() {
       score: "211/360",
       date: "19th February 2026",
       rank: "Rank 7",
-      img: "/HashIPMAT14.jpeg",
-    },
-    {
-      name: "Hash IPMAT 20",
-      score: "184/360",
-      date: "7th March 26",
-      rank: "Rank 11",
-      img: "/HashIPMAT20.jpeg",
-    },
-    {
-      name: "Hash IPMAT 19",
-      score: "186/360",
-      date: "13 April 2025",
-      rank: "Rank 5 ",
-      img: "/HashIPMAT19.jpeg",
-    },
-    {
-      name: "Hash IPMAT 17",
-      score: "226/360",
-      date: "12th April 2025",
-      rank: "Rank 3",
-      img: "/HashIPMAT17.jpeg",
+      img: "/air1commandcenter/dsb.jpeg",
     },
   ];
 
@@ -53,7 +92,7 @@ export default function Component() {
     setActiveSlide((prev) => (prev + 1) % mockScores.length);
   const prevSlide = () =>
     setActiveSlide(
-      (prev) => (prev - 1 + mockScores.length) % mockScores.length
+      (prev) => (prev - 1 + mockScores.length) % mockScores.length,
     );
 
   useEffect(() => {
@@ -61,51 +100,124 @@ export default function Component() {
     return () => clearInterval(interval);
   }, []);
 
+  const nextStorySlide = useCallback(() => {
+    setActiveStorySlide((prev) => (prev + 1) % successStories.length);
+  }, [successStories.length]);
+
+  const prevStorySlide = useCallback(() => {
+    setActiveStorySlide(
+      (prev) => (prev - 1 + successStories.length) % successStories.length,
+    );
+  }, [successStories.length]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStorySlide((prev) => (prev + 1) % successStories.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [successStories.length]);
+
   return (
     <div className="min-h-screen bg-slate-950 p-6">
       <div className="max-w-7xl mx-auto space-y-16 pb-20">
+        {/* SUCCESS STORIES CAROUSEL */}
         <section className="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-8 md:p-16">
           <div className="absolute top-0 right-0 p-12 opacity-10">
             <Trophy className="w-64 h-64 text-[#f9a01b]" />
           </div>
 
-          <div className="relative z-10 flex flex-col lg:flex-row items-center gap-12">
-            <div className="relative">
-              <div className="w-48 h-48 md:w-64 md:h-64 rounded-3xl overflow-hidden border-4 border-[#f9a01b]">
-                <img
-                  // src="/air1commandcenter/air1.png"
-                  src="/air1.png"
-                  alt="AIR 1"
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: "50% 20%" }}
-                />
-              </div>
-              <div className="absolute -bottom-4 -right-4 bg-[#f9a01b] text-white font-black px-4 py-2 rounded-xl text-xl">
-                AIR 1
-              </div>
-            </div>
+          {/* Navigation Buttons */}
+          <div className="absolute top-8 right-8 flex gap-2">
+            <button
+              onClick={prevStorySlide}
+              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-5 h-5 text-white" />
+            </button>
+            <button
+              onClick={nextStorySlide}
+              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-5 h-5 text-white" />
+            </button>
+          </div>
 
-            <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#f9a01b] text-[#f9a01b] text-xs font-bold mb-6">
-                <Star className="w-3 h-3 fill-current" /> SUCCESS STORY
-              </div>
-              <h2 className="text-4xl md:text-5xl font-black mb-4 text-white">
-                The Blueprint of <span className="text-[#f9a01b]">AIR 1.</span>
-              </h2>
-              <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-8">
-                "Becoming AIR 1 wasn't about studying 18 hours a day. It was
-                about solving the right problems, failing in mocks early, and
-                keeping a clinical record of my progress."
-              </p>
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                <div className="flex items-center gap-2 text-slate-300 bg-slate-800/50 px-4 py-2 rounded-xl border border-slate-700">
-                  <Clock className="w-4 h-4 text-[#f9a01b]" /> 18 Months Prep
+          {/* Carousel Content */}
+          <div className="relative">
+            {successStories.map((story, i) => (
+              <div
+                key={i}
+                className={`transition-all duration-700 ${
+                  i === activeStorySlide
+                    ? "opacity-100 relative"
+                    : "opacity-0 absolute inset-0 pointer-events-none"
+                }`}
+              >
+                <div className="relative z-10 flex flex-col lg:flex-row items-center gap-12">
+                  <div className="relative">
+                    <div className="w-48 h-48 md:w-64 md:h-64 rounded-3xl overflow-hidden border-4 border-[#f9a01b]">
+                      <img
+                        src={story.image}
+                        alt={story.name}
+                        className="w-full h-full object-cover"
+                        style={{ objectPosition: "50% 20%" }}
+                      />
+                    </div>
+                    <div className="absolute -bottom-4 -right-4 bg-[#f9a01b] text-white font-black px-4 py-2 rounded-xl text-xl">
+                      {story.badge}
+                    </div>
+                  </div>
+
+                  <div className="flex-1 text-center lg:text-left">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#f9a01b] text-[#f9a01b] text-xs font-bold mb-6">
+                      <Star className="w-3 h-3 fill-current" /> Straight from
+                      the winners
+                    </div>
+                    <h2 className="text-4xl md:text-4xl font-black mb-2 text-white">
+                      {story.title}
+                    </h2>
+                    <p className="text-[#f9a01b] text-xl md:text-2xl font-bold mb-4">
+                      {story.name}
+                    </p>
+                    <p className="text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-6">
+                      "{story.quote}"
+                    </p>
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-4">
+                      {story.stats.map((stat, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center gap-2 text-slate-300 bg-slate-800/50 px-4 py-2 rounded-xl border border-slate-700"
+                        >
+                          <stat.icon className="w-4 h-4 text-[#f9a01b]" />{" "}
+                          {stat.label}
+                        </div>
+                      ))}
+                    </div>
+                    {/* <p className="text-slate-500 text-sm font-semibold">
+                      {story.college}
+                    </p> */}
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-slate-300 bg-slate-800/50 px-4 py-2 rounded-xl border border-slate-700">
-                  <Target className="w-4 h-4 text-[#f9a01b]" /> 150+ Mocks
-                </div>
               </div>
-            </div>
+            ))}
+          </div>
+
+          {/* Carousel Indicators */}
+          <div className="flex justify-center gap-2 mt-8 relative z-20">
+            {successStories.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveStorySlide(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === activeStorySlide
+                    ? "w-6 bg-[#f9a01b]"
+                    : "w-1.5 bg-slate-700 hover:bg-slate-600"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
           </div>
         </section>
 
@@ -124,13 +236,17 @@ export default function Component() {
                 <span className="text-red-500">01.</span> Data Interpretation
               </h4>
               <img
-                src="/try-yourself.png"
+                src="/air1commandcenter/try-yourself.png"
                 alt="Try Yourself"
                 className="w-full h-auto rounded-lg blur-sm mb-6 cursor-pointer"
-                onClick={() => window.open("/try-yourself.png", "_blank")}
+                onClick={() =>
+                  window.open("/air1commandcenter/try-yourself.png", "_blank")
+                }
               />
               <button
-                onClick={() => window.open("/try-yourself.png", "_blank")}
+                onClick={() =>
+                  window.open("/air1commandcenter/try-yourself.png", "_blank")
+                }
                 className="text-[#f9a01b] text-sm font-bold flex items-center gap-2 hover:translate-x-1 transition-transform"
               >
                 Try Yourself <ChevronRight className="w-4 h-4" />
@@ -139,159 +255,114 @@ export default function Component() {
           </section>
 
           <section className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500">
-                  <TrendingUp className="w-5 h-5" />
-                </div>
-                <h3 className="text-2xl font-bold text-white">
-                  The Scoreboard
-                </h3>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500">
+                <TrendingUp className="w-5 h-5" />
               </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={prevSlide}
-                  className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4 text-white" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-colors"
-                >
-                  <ChevronRight className="w-4 h-4 text-white" />
-                </button>
-              </div>
+              <h3 className="text-2xl font-bold text-white">
+                DSB DAILY CHALLENGE.
+              </h3>
             </div>
 
             <div className="relative h-80 rounded-3xl overflow-hidden border border-slate-800">
-              {mockScores.map((score, i) => (
-                <div
-                  key={i}
-                  className={`absolute inset-0 transition-all duration-700 ${
-                    i === activeSlide
-                      ? "opacity-100 translate-x-0"
-                      : "opacity-0 translate-x-8 pointer-events-none"
-                  }`}
-                >
-                  <img
-                    src={score.img}
-                    alt={score.name}
-                    className="w-full h-full object-cover brightness-50"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-8 flex flex-col justify-end">
-                    <span className="text-green-400 text-xs font-black tracking-widest uppercase mb-1">
-                      {score.date}
-                    </span>
-                    <h4 className="text-2xl font-black text-white mb-2">
-                      {score.name}
-                    </h4>
-                    <div className="flex items-end justify-between">
-                      <div className="flex items-center gap-6">
-                        <div>
-                          <p className="text-xs text-slate-400 font-bold uppercase">
-                            Score
-                          </p>
-                          <p className="text-xl font-black text-[#f9a01b]">
-                            {score.score}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-slate-400 font-bold uppercase">
-                            Rank
-                          </p>
-                          <p className="text-xl font-black text-white">
-                            {score.rank}
-                          </p>
-                        </div>
+              {/* Glowing Green Live Indicator - Top Right */}
+              <div className="absolute top-4 right-4 z-10 flex items-center gap-2 bg-green-500/20 backdrop-blur-sm border border-green-500/50 px-3 py-1.5 rounded-full shadow-[0_0_20px_rgba(34,197,94,0.6)]">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.8)]"></div>
+                <span className="text-green-400 text-xs font-bold uppercase tracking-wider drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]">
+                  LIVE
+                </span>
+              </div>
+
+              <img
+                src="/air1commandcenter/dsb.jpeg"
+                alt="Hash IPMAT 14"
+                className="w-full h-full object-contain brightness-80"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent p-8 flex flex-col justify-end">
+                <div className="flex items-end justify-between">
+                  <div className="flex items-center gap-6">
+                    {" "}
+                    <div className="flex items-center gap-6">
+                      <div>
+                        <p className="text-xs text-green-400 font-bold uppercase">
+                         245 Students earned the 'Accuracy King' Batch today. Will you be next?
+                        </p>
                       </div>
-                      <button
-                        onClick={() =>
-                          window.open(
-                            "https://study.ipmcareer.com/mock/81568d95-7c5f-4b6b-bb38-727cdb7cdf48",
-                            "_blank"
-                          )
-                        }
-                        className="text-[#f9a01b] text-sm font-bold flex items-center gap-2 hover:translate-x-1 transition-transform"
-                      >
-                        Challenge yourself <ChevronRight className="w-4 h-4" />
-                      </button>
+                      <div>
+                      </div>
                     </div>
                   </div>
+                  <button
+                    onClick={() =>
+                      window.open(
+                        "https://register.ipmcareer.com/dsbchallenge",
+                        "_blank",
+                      )
+                    }
+                    className="text-[#f9a01b] text-sm font-bold flex items-center gap-2 hover:translate-x-1 transition-transform"
+                  >
+                    START CHALLENGE <ChevronRight className="w-4 h-4" />
+                  </button>
                 </div>
-              ))}
-            </div>
-
-            <div className="flex justify-center gap-2">
-              {mockScores.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveSlide(i)}
-                  className={`h-1.5 rounded-full transition-all ${
-                    i === activeSlide
-                      ? "w-8 bg-orange-500"
-                      : "w-1.5 bg-slate-700 hover:bg-slate-600"
-                  }`}
-                />
-              ))}
+              </div>
             </div>
           </section>
         </div>
 
-        <section className="bg-slate-900/30 rounded-3xl border-2 border-dashed border-slate-800 p-12 text-center">
-          <h3 className="text-3xl font-black mb-2 text-white">
+        <section className="bg-slate-900/30 rounded-2xl md:rounded-3xl border-2 border-dashed border-slate-800 p-6 md:p-12 text-center">
+          <h3 className="text-2xl md:text-3xl font-black mb-2 text-white">
             Download My Study Assets
           </h3>
-          <p className="text-slate-500 mb-10">
-            The exact files I used to maintain consistency and track my
-            progress.
+          <p className="text-slate-500 mb-6 md:mb-10 text-sm md:text-base">
+            "Level up your prep with these essential files and track your
+            progress."
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
             <div
               onClick={() =>
                 window.open(
-                  "https://drive.google.com/file/d/1Wn7z6unSpNQSV7U0dK_mO33zYcGE46qi/view?usp=sharing",
-                  "_blank"
+                  "https://drive.google.com/file/d/1rL71mkObdpfzU4Xwoej6qXrNs04Ih61v/view?usp=sharing",
+                  "_blank",
                 )
               }
-              className="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-orange-500 transition-all text-left flex items-center gap-6 cursor-pointer group"
+              className="bg-slate-900 p-4 md:p-8 rounded-xl md:rounded-2xl border border-slate-800 hover:border-orange-500 transition-all text-left flex items-center gap-4 md:gap-6 cursor-pointer group"
             >
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-[#f9a01b] group-hover:bg-[#f9a01b] group-hover:text-black transition-all">
-                <FileText className="w-8 h-8" />
+              <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-xl md:rounded-2xl bg-slate-800/50 flex items-center justify-center text-[#f9a01b] group-hover:bg-[#f9a01b] group-hover:text-black transition-all">
+                <FileText className="w-6 h-6 md:w-8 md:h-8" />
               </div>
-              <div className="flex-1">
-                <h4 className="font-black text-lg text-white">
-                  500+ Solved MCQs
+              <div className="flex-1 min-w-0">
+                <h4 className="font-black text-base md:text-lg text-white mb-1">
+                  300+ Solved MCQs
                 </h4>
-                <p className="text-slate-500 text-sm">
+                <p className="text-slate-500 text-xs md:text-sm">
                   Every question I solved in one PDF.
                 </p>
               </div>
-              <Download className="w-6 h-6 text-slate-700 group-hover:text-orange-500 transition-colors" />
+              <Download className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-slate-700 group-hover:text-orange-500 transition-colors" />
             </div>
 
             <div
               onClick={() =>
                 window.open(
                   "https://docs.google.com/spreadsheets/d/10RMRmi6gtHT5xQIiTvRPadeVTS2tedcI1BRALMKFztQ/edit?gid=684469844#gid=684469844",
-                  "_blank"
+                  "_blank",
                 )
               }
-              className="bg-slate-900 p-8 rounded-2xl border border-slate-800 hover:border-green-500 transition-all text-left flex items-center gap-6 cursor-pointer group"
+              className="bg-slate-900 p-4 md:p-8 rounded-xl md:rounded-2xl border border-slate-800 hover:border-green-500 transition-all text-left flex items-center gap-4 md:gap-6 cursor-pointer group"
             >
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-black transition-all">
-                <Table className="w-8 h-8" />
+              <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 rounded-xl md:rounded-2xl bg-slate-800/50 flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-black transition-all">
+                <Table className="w-6 h-6 md:w-8 md:h-8" />
               </div>
-              <div className="flex-1">
-                <h4 className="font-black text-lg text-white">
+              <div className="flex-1 min-w-0">
+                <h4 className="font-black text-base md:text-lg text-white mb-1">
                   Akshat Attri's Daily Timetable
                 </h4>
-                <p className="text-slate-500 text-sm">
+                <p className="text-slate-500 text-xs md:text-sm">
                   Live Excel sheet with hour-by-hour logs.
                 </p>
               </div>
-              <ExternalLink className="w-6 h-6 text-slate-700 group-hover:text-green-500 transition-colors" />
+              <ExternalLink className="w-5 h-5 md:w-6 md:h-6 flex-shrink-0 text-slate-700 group-hover:text-green-500 transition-colors" />
             </div>
           </div>
         </section>
@@ -303,9 +374,9 @@ export default function Component() {
             quality of your analysis of what you don't know."
           </h2>
           <div className="mt-8">
-            <p className="text-white font-black text-lg">Nikhilesh Sanka</p>
+            <p className="text-white font-black text-lg">Akshat Attri</p>
             <p className="text-slate-500 uppercase tracking-widest text-xs font-bold">
-              IIM Indore '28
+              IIM Indore '30
             </p>
           </div>
         </section>

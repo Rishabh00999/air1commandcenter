@@ -23,7 +23,7 @@ const audioLogs = [
       "That conversation where I explained why mock scores matter more than perfect attendance.",
     icon: Users,
     tags: ["Family Pressure", "Communication", "Boundaries"],
-    audio: "/parental.mp4",
+    audio: "/air1commandcenter/parental.mp4",
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ const audioLogs = [
       "Should I study more or rest? My exact checklist for the final 7 days.",
     icon: HeartPulse,
     tags: ["Anxiety", "Last Week", "Mental Prep"],
-    audio: "/week-before.mp4",
+    audio: "/air1commandcenter/week-before.mp4",
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const audioLogs = [
       "Minute-by-minute: What I ate, when I left, and exam-day nerves.",
     icon: Flag,
     tags: ["Exam Day", "Routine", "Peak Performance"],
-    audio: "/exam-day.mp4",
+    audio: "/air1commandcenter/exam-day.mp4",
   },
 ];
 

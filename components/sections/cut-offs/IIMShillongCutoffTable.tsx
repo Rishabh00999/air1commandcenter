@@ -4,9 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const primaryColor = '#823588';
 const secondaryColor = '#FB923C';
 const accentPurple = '#823588';
-// const accentGold = '#FFC107';
 
-// Data for the chart
 const chartData = [
   { category: 'General', qaSa: 12, qaMcq: 24, verbal: 36 },
   { category: 'EWS', qaSa: 12, qaMcq: 24, verbal: 36 },
@@ -44,21 +42,45 @@ const IIMShillongCutoff = () => {
 
   return (
     <div className="min-h-screen bg-slate-950">
-      <div className="max-w-7xl mx-auto p-4 md:p-8">
+      <div className="max-w-7xl mx-auto p-3 md:p-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-2" style={{ color: secondaryColor }}>
+        <div className="text-center mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-2 px-2" style={{ color: secondaryColor }}>
             IIM Shillong IPM Cutoff 2025
           </h1>
-          <p className="text-slate-400 text-lg">Section-wise Cutoff Analysis</p>
+          <p className="text-slate-400 text-sm md:text-lg">Section-wise Cutoff Analysis</p>
         </div>
 
         {/* Bar Chart Section */}
-        <div className="bg-slate-900/40 rounded-2xl shadow-xl p-6 mb-8 border-t-4" style={{ borderColor: primaryColor }}>
-          <h2 className="text-2xl font-bold mb-6" style={{ color: secondaryColor }}>
+        <div className="bg-slate-900/40 rounded-xl md:rounded-2xl shadow-xl p-3 md:p-6 mb-6 md:mb-8 border-t-4" style={{ borderColor: primaryColor }}>
+          <h2 className="text-lg md:text-2xl font-bold mb-4 md:mb-6" style={{ color: secondaryColor }}>
             Sectional Cutoff Distribution - 2025
           </h2>
-          <ResponsiveContainer width="100%" height={400}>
+          <ResponsiveContainer width="100%" height={300} className="md:hidden">
+            <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+              <XAxis 
+                dataKey="category" 
+                tick={{ fill: '#94a3b8', fontSize: 10, fontWeight: 600 }}
+                angle={-45}
+                textAnchor="end"
+                height={60}
+              />
+              <YAxis 
+                tick={{ fill: '#94a3b8', fontSize: 10 }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend 
+                wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }}
+                iconType="circle"
+                iconSize={8}
+              />
+              <Bar dataKey="qaSa" name="QA-SA" fill={accentPurple} radius={[4, 4, 0, 0]} />
+              <Bar dataKey="qaMcq" name="QA-MCQ" fill="#48C9B0" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="verbal" name="Verbal" fill={secondaryColor} radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width="100%" height={400} className="hidden md:block">
             <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis 
@@ -79,38 +101,39 @@ const IIMShillongCutoff = () => {
               <Bar dataKey="verbal" name="Verbal Ability" fill={secondaryColor} radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
-          <div className="mt-4 flex flex-wrap gap-4 justify-center text-sm text-slate-400">
+          {/* <div className="mt-4 flex flex-col md:flex-row md:flex-wrap gap-2 md:gap-4 md:justify-center text-xs md:text-sm text-slate-400">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: accentPurple }}></div>
+              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: accentPurple }}></div>
               <span>QA (SA): Quantitative Ability - Short Answer</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: '#48C9B0' }}></div>
+              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: '#48C9B0' }}></div>
               <span>QA (MCQ): Quantitative Ability - Multiple Choice</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full" style={{ backgroundColor: secondaryColor }}></div>
+              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: secondaryColor }}></div>
               <span>VA: Verbal Ability</span>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Cutoff Table */}
-        <div className="bg-slate-900/40 rounded-2xl shadow-xl overflow-hidden border-t-4" style={{ borderColor: secondaryColor }}>
-          <div className="p-6 border-b border-slate-800 bg-slate-900/60">
-            <h2 className="text-2xl font-bold" style={{ color: secondaryColor }}>
-              IIM Shillong IPM 2025 Cutoff Details (Section-wise)
+        <div className="bg-slate-900/40 rounded-xl md:rounded-2xl shadow-xl overflow-hidden border-t-4" style={{ borderColor: secondaryColor }}>
+          <div className="p-4 md:p-6 border-b border-slate-800 bg-slate-900/60">
+            <h2 className="text-lg md:text-2xl font-bold" style={{ color: secondaryColor }}>
+              IIM Shillong IPM 2025 Cutoff Details
             </h2>
+            <p className="text-xs md:text-sm text-slate-400 mt-1">Section-wise Requirements</p>
           </div>
           
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full text-xs md:text-sm">
               <thead>
                 <tr className="bg-slate-800">
-                  <th className="px-6 py-4 text-left text-white font-semibold text-sm">Category</th>
-                  <th className="px-6 py-4 text-center text-white font-semibold text-sm">QA-SA</th>
-                  <th className="px-6 py-4 text-center text-white font-semibold text-sm">QA-MCQ</th>
-                  <th className="px-6 py-4 text-center text-white font-semibold text-sm">VA</th>
+                  <th className="px-3 md:px-6 py-3 md:py-4 text-left text-white font-semibold">Category</th>
+                  <th className="px-2 md:px-6 py-3 md:py-4 text-center text-white font-semibold">QA-SA</th>
+                  <th className="px-2 md:px-6 py-3 md:py-4 text-center text-white font-semibold">QA-MCQ</th>
+                  <th className="px-2 md:px-6 py-3 md:py-4 text-center text-white font-semibold">VA</th>
                 </tr>
               </thead>
               <tbody>
@@ -121,11 +144,11 @@ const IIMShillongCutoff = () => {
                       index % 2 === 0 ? 'bg-slate-900/20' : 'bg-slate-900/40'
                     } hover:bg-slate-800/50`}
                   >
-                    <td className="px-6 py-4 font-semibold text-slate-200">{row.category}</td>
-                    <td className="px-6 py-4 text-center text-slate-300">{row.qaSa}</td>
-                    <td className="px-6 py-4 text-center text-slate-300">{row.qaMcq}</td>
-                    <td className="px-6 py-4 text-center">
-                      <span className="font-bold text-lg" style={{ color: secondaryColor }}>
+                    <td className="px-3 md:px-6 py-3 md:py-4 font-semibold text-slate-200">{row.category}</td>
+                    <td className="px-2 md:px-6 py-3 md:py-4 text-center text-slate-300">{row.qaSa}</td>
+                    <td className="px-2 md:px-6 py-3 md:py-4 text-center text-slate-300">{row.qaMcq}</td>
+                    <td className="px-2 md:px-6 py-3 md:py-4 text-center">
+                      <span className="font-bold text-base md:text-lg" style={{ color: secondaryColor }}>
                         {row.verbal}
                       </span>
                     </td>
@@ -137,8 +160,8 @@ const IIMShillongCutoff = () => {
         </div>
 
         {/* Footer Note */}
-        <div className="mt-8 p-4 bg-slate-900/40 rounded-xl border-l-4" style={{ borderColor: primaryColor }}>
-          <p className="text-sm text-slate-300">
+        <div className="mt-6 md:mt-8 p-3 md:p-4 bg-slate-900/40 rounded-xl border-l-4" style={{ borderColor: primaryColor }}>
+          <p className="text-xs md:text-sm text-slate-300">
             <span className="font-semibold" style={{ color: secondaryColor }}>Note:</span> All cutoff marks are based on official IIM Shillong data for the year 2025. The cutoffs represent the minimum marks required in each section to qualify for the next stage of selection.
           </p>
         </div>
