@@ -1,483 +1,3 @@
-// import { useState } from "react";
-// import { Calendar, Tag, CheckCircle, XCircle, Search } from "lucide-react";
-
-// const primaryColor = "#FB923C";
-// const accentPurple = "#823588";
-
-// export default function IPMATChecker() {
-//   const [formData, setFormData] = useState({
-//     dob: "",
-//     category: "",
-//     tenthYear: "",
-//     tenthMarks: "",
-//     tenthMathMarks: "",
-//     twelfthYear: "",
-//     twelfthMarks: "",
-//     mathStats: "",
-//   });
-
-//   const [results, setResults] = useState(null);
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   const calculateAge = (dob) => {
-//     const today = new Date();
-//     const birthDate = new Date(dob);
-//     let age = today.getFullYear() - birthDate.getFullYear();
-//     const monthDiff = today.getMonth() - birthDate.getMonth();
-//     if (
-//       monthDiff < 0 ||
-//       (monthDiff === 0 && today.getDate() < birthDate.getDate())
-//     ) {
-//       age--;
-//     }
-//     return age;
-//   };
-
-//   const checkEligibility = (e) => {
-//     e.preventDefault();
-
-//     const age = calculateAge(formData.dob);
-//     const category = formData.category;
-//     const tenthMarks = parseFloat(formData.tenthMarks);
-//     const tenthMathMarks = parseFloat(formData.tenthMathMarks);
-//     const twelfthMarks = parseFloat(formData.twelfthMarks);
-//     const twelfthYear = formData.twelfthYear;
-//     const mathStats = formData.mathStats;
-
-//     const colleges = [
-//       {
-//         name: "IIM Indore (IPM)",
-//         minAge: 20,
-//         maxAge: { general: 20, obc: 22, sc: 22, st: 22, ews: 20, pwd: 22 },
-//         minTenthMarks: 60,
-//         minTwelfthMarks: {
-//           general: 60,
-//           obc: 60,
-//           sc: 55,
-//           st: 55,
-//           ews: 60,
-//           pwd: 55,
-//         },
-//         mathRequired: true,
-//       },
-//       {
-//         name: "IIM Rohtak (IPM)",
-//         minAge: 18,
-//         maxAge: { general: 20, obc: 22, sc: 22, st: 22, ews: 20, pwd: 22 },
-//         minTenthMarks: 60,
-//         minTwelfthMarks: {
-//           general: 60,
-//           obc: 60,
-//           sc: 55,
-//           st: 55,
-//           ews: 60,
-//           pwd: 55,
-//         },
-//         mathRequired: true,
-//       },
-//       {
-//         name: "IIM Ranchi (IPM)",
-//         minAge: 17,
-//         maxAge: { general: 20, obc: 22, sc: 22, st: 22, ews: 20, pwd: 22 },
-//         minTenthMarks: 60,
-//         minTwelfthMarks: {
-//           general: 60,
-//           obc: 60,
-//           sc: 55,
-//           st: 55,
-//           ews: 60,
-//           pwd: 55,
-//         },
-//         mathRequired: false,
-//       },
-//       {
-//         name: "IIM Jammu (IPM)",
-//         minAge: 18,
-//         maxAge: { general: 20, obc: 22, sc: 22, st: 22, ews: 20, pwd: 22 },
-//         minTenthMarks: 60,
-//         minTwelfthMarks: {
-//           general: 60,
-//           obc: 60,
-//           sc: 55,
-//           st: 55,
-//           ews: 60,
-//           pwd: 55,
-//         },
-//         mathRequired: true,
-//       },
-//       {
-//         name: "IIM Bodh Gaya (IPM)",
-//         minAge: 18,
-//         maxAge: { general: 20, obc: 22, sc: 22, st: 22, ews: 20, pwd: 22 },
-//         minTenthMarks: 60,
-//         minTwelfthMarks: {
-//           general: 60,
-//           obc: 60,
-//           sc: 55,
-//           st: 55,
-//           ews: 60,
-//           pwd: 55,
-//         },
-//         mathRequired: false,
-//       },
-//     ];
-
-//     const eligibilityResults = colleges.map((college) => {
-//       let eligible = true;
-//       let reasons = [];
-
-//       if (age < college.minAge) {
-//         eligible = false;
-//         reasons.push(`Minimum age is ${college.minAge} years`);
-//       }
-
-//       if (age > college.maxAge[category]) {
-//         eligible = false;
-//         reasons.push(
-//           `Maximum age for ${category.toUpperCase()} is ${
-//             college.maxAge[category]
-//           } years`
-//         );
-//       }
-
-//       if (tenthMarks < college.minTenthMarks) {
-//         eligible = false;
-//         reasons.push(`Minimum 10th marks: ${college.minTenthMarks}%`);
-//       }
-
-//       if (
-//         twelfthYear !== "2026" &&
-//         twelfthMarks < college.minTwelfthMarks[category]
-//       ) {
-//         eligible = false;
-//         reasons.push(
-//           `Minimum 12th marks: ${college.minTwelfthMarks[category]}%`
-//         );
-//       }
-
-//       if (college.mathRequired && mathStats === "no") {
-//         eligible = false;
-//         reasons.push("Mathematics/Statistics required in 11th/12th");
-//       }
-
-//       if (tenthMathMarks < 60) {
-//         eligible = false;
-//         reasons.push("Minimum 10th Mathematics marks: 60%");
-//       }
-
-//       if (twelfthYear === "2026") {
-//         reasons.push("You are appearing for 12th in 2026");
-//       }
-
-//       return { name: college.name, eligible, reasons };
-//     });
-
-//     setResults(eligibilityResults);
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-slate-950">
-//       {/* Hero */}
-//       <div
-//         className="text-white py-4 px-4 relative overflow-hidden"
-//       >
-//         <div className="mx-auto text-center relative z-10">
-//           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white mt-6">
-//             <span className="bg-gradient-to-r from-purple-400 to-orange-400 bg-clip-text text-transparent">
-//               IPMAT 2026 Eligibility Checker
-//             </span>
-//           </h1>
-//           <p className="text-sm opacity-90">
-//             Check your eligibility for IPM programs at various IIMs
-//           </p>
-//         </div>
-//       </div>
-
-//       {/* Form */}
-//       <div className="max-w-4xl mx-auto px-4 py-12">
-//         <div className="bg-slate-900 rounded-2xl shadow-2xl p-8 border-2 border-slate-800">
-//           <h2
-//             className="text-3xl font-bold mb-2"
-//             style={{ color: primaryColor }}
-//           >
-//             Eligibility for IPMAT 2026
-//           </h2>
-//           <p className="text-slate-400 mb-8">
-//             Fill in your details to check eligibility for IIM Indore, Rohtak,
-//             Ranchi, Jammu & Bodh Gaya
-//           </p>
-
-//           <form onSubmit={checkEligibility} className="space-y-6">
-//             <div className="grid md:grid-cols-2 gap-6">
-//               <div>
-//                 <label className="block font-semibold mb-2 flex items-center gap-2 text-slate-200">
-//                   <Calendar
-//                     className="w-5 h-5"
-//                     style={{ color: primaryColor }}
-//                   />
-//                   Date of Birth
-//                 </label>
-//                 <input
-//                   type="date"
-//                   name="dob"
-//                   value={formData.dob}
-//                   onChange={handleChange}
-//                   required
-//                   className="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white focus:outline-none transition-colors"
-//                   style={{
-//                     focusBorderColor: primaryColor,
-//                   }}
-//                   onFocus={(e) => (e.target.style.borderColor = primaryColor)}
-//                   onBlur={(e) => (e.target.style.borderColor = "#334155")}
-//                 />
-//               </div>
-
-//               <div>
-//                 <label className="block font-semibold mb-2 flex items-center gap-2 text-slate-200">
-//                   <Tag className="w-5 h-5" style={{ color: primaryColor }} />
-//                   Category
-//                 </label>
-//                 <select
-//                   name="category"
-//                   value={formData.category}
-//                   onChange={handleChange}
-//                   required
-//                   className="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white focus:outline-none transition-colors"
-//                   onFocus={(e) => (e.target.style.borderColor = primaryColor)}
-//                   onBlur={(e) => (e.target.style.borderColor = "#334155")}
-//                 >
-//                   <option value="">Select Category</option>
-//                   <option value="general">General</option>
-//                   <option value="obc">OBC-NCL</option>
-//                   <option value="sc">SC</option>
-//                   <option value="st">ST</option>
-//                   <option value="ews">EWS</option>
-//                   <option value="pwd">PwD</option>
-//                 </select>
-//               </div>
-
-//               <div>
-//                 <label className="block font-semibold mb-2 text-slate-200">
-//                   10th Passing Year
-//                 </label>
-//                 <select
-//                   name="tenthYear"
-//                   value={formData.tenthYear}
-//                   onChange={handleChange}
-//                   required
-//                   className="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white focus:outline-none transition-colors"
-//                   onFocus={(e) => (e.target.style.borderColor = primaryColor)}
-//                   onBlur={(e) => (e.target.style.borderColor = "#334155")}
-//                 >
-//                   <option value="">Select Year</option>
-//                   <option value="2022">2022</option>
-//                   <option value="2023">2023</option>
-//                   <option value="2024">2024</option>
-//                   <option value="2025">2025</option>
-//                 </select>
-//               </div>
-
-//               <div>
-//                 <label className="block font-semibold mb-2 text-slate-200">
-//                   10th Board Marks (%)
-//                 </label>
-//                 <input
-//                   type="number"
-//                   name="tenthMarks"
-//                   value={formData.tenthMarks}
-//                   onChange={handleChange}
-//                   min="0"
-//                   max="100"
-//                   step="0.01"
-//                   required
-//                   className="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white focus:outline-none transition-colors"
-//                   onFocus={(e) => (e.target.style.borderColor = primaryColor)}
-//                   onBlur={(e) => (e.target.style.borderColor = "#334155")}
-//                 />
-//               </div>
-
-//               <div>
-//                 <label className="block font-semibold mb-2 text-slate-200">
-//                   10th Mathematics Marks (%)
-//                 </label>
-//                 <input
-//                   type="number"
-//                   name="tenthMathMarks"
-//                   value={formData.tenthMathMarks}
-//                   onChange={handleChange}
-//                   min="0"
-//                   max="100"
-//                   step="0.01"
-//                   required
-//                   className="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white focus:outline-none transition-colors"
-//                   onFocus={(e) => (e.target.style.borderColor = primaryColor)}
-//                   onBlur={(e) => (e.target.style.borderColor = "#334155")}
-//                 />
-//               </div>
-
-//               <div>
-//                 <label className="block font-semibold mb-2 text-slate-200">
-//                   12th Passing Year
-//                 </label>
-//                 <select
-//                   name="twelfthYear"
-//                   value={formData.twelfthYear}
-//                   onChange={handleChange}
-//                   required
-//                   className="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white focus:outline-none transition-colors"
-//                   onFocus={(e) => (e.target.style.borderColor = primaryColor)}
-//                   onBlur={(e) => (e.target.style.borderColor = "#334155")}
-//                 >
-//                   <option value="">Select Year</option>
-//                   <option value="2024">2024</option>
-//                   <option value="2025">2025</option>
-//                   <option value="2026">2026 (Appearing)</option>
-//                 </select>
-//               </div>
-
-//               <div className="md:col-span-2">
-//                 <label className="block font-semibold mb-2 text-slate-200">
-//                   12th Board Marks (%)
-//                 </label>
-//                 <input
-//                   type="number"
-//                   name="twelfthMarks"
-//                   value={formData.twelfthMarks}
-//                   onChange={handleChange}
-//                   min="0"
-//                   max="100"
-//                   step="0.01"
-//                   required
-//                   className="w-full px-4 py-3 bg-slate-800 border-2 border-slate-700 rounded-lg text-white focus:outline-none transition-colors"
-//                   onFocus={(e) => (e.target.style.borderColor = primaryColor)}
-//                   onBlur={(e) => (e.target.style.borderColor = "#334155")}
-//                 />
-//               </div>
-//             </div>
-
-//             <div
-//               className="p-6 rounded-xl border-l-4"
-//               style={{
-//                 backgroundColor: "rgba(130, 53, 136, 0.1)",
-//                 borderLeftColor: primaryColor,
-//               }}
-//             >
-//               <h3
-//                 className="text-lg font-bold mb-4"
-//                 style={{ color: primaryColor }}
-//               >
-//                 Did you have Mathematics/Statistics in 11th/12th?
-//               </h3>
-//               <div className="flex flex-col sm:flex-row gap-6">
-//                 <label className="flex items-center gap-2 cursor-pointer text-slate-200">
-//                   <input
-//                     type="radio"
-//                     name="mathStats"
-//                     value="yes"
-//                     checked={formData.mathStats === "yes"}
-//                     onChange={handleChange}
-//                     required
-//                     className="w-5 h-5"
-//                     style={{ accentColor: primaryColor }}
-//                   />
-//                   <span className="font-semibold">Yes, I had Math/Stats</span>
-//                 </label>
-//                 <label className="flex items-center gap-2 cursor-pointer text-slate-200">
-//                   <input
-//                     type="radio"
-//                     name="mathStats"
-//                     value="no"
-//                     checked={formData.mathStats === "no"}
-//                     onChange={handleChange}
-//                     required
-//                     className="w-5 h-5"
-//                     style={{ accentColor: primaryColor }}
-//                   />
-//                   <span className="font-semibold">
-//                     No, I didn't have Math/Stats
-//                   </span>
-//                 </label>
-//               </div>
-//             </div>
-
-//             <div className="text-center pt-4">
-//               <button
-//                 type="submit"
-//                 className="px-8 py-4 rounded-xl font-bold text-lg text-white hover:shadow-2xl transition-all hover:scale-105 flex items-center gap-3 mx-auto"
-//                 style={{
-//                   background: `linear-gradient(135deg, ${primaryColor} 0%, #f97316 100%)`,
-//                 }}
-//               >
-//                 <Search className="w-6 h-6" />
-//                 Check Eligibility
-//               </button>
-//             </div>
-//           </form>
-//         </div>
-
-//         {/* Results */}
-//         {results && (
-//           <div className="bg-slate-900 rounded-2xl shadow-2xl p-8 border-2 border-slate-800 mt-8">
-//             <h2
-//               className="text-3xl font-bold mb-6"
-//               style={{ color: primaryColor }}
-//             >
-//               Your Eligibility Results
-//             </h2>
-//             <div className="space-y-4">
-//               {results.map((college, idx) => (
-//                 <div
-//                   key={idx}
-//                   className={`border-2 rounded-xl p-6 transition-all hover:shadow-xl ${
-//                     college.eligible
-//                       ? "border-green-500/50 bg-green-950/20"
-//                       : "border-red-500/50 bg-red-950/20"
-//                   }`}
-//                 >
-//                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-3">
-//                     <h3
-//                       className="text-xl font-bold"
-//                       style={{ color: primaryColor }}
-//                     >
-//                       {college.name}
-//                     </h3>
-//                     <span
-//                       className={`px-4 py-2 rounded-full font-bold text-sm flex items-center gap-2 ${
-//                         college.eligible
-//                           ? "bg-green-500/20 text-green-400 border border-green-500/30"
-//                           : "bg-red-500/20 text-red-400 border border-red-500/30"
-//                       }`}
-//                     >
-//                       {college.eligible ? (
-//                         <>
-//                           <CheckCircle className="w-5 h-5" /> Eligible
-//                         </>
-//                       ) : (
-//                         <>
-//                           <XCircle className="w-5 h-5" /> Not Eligible
-//                         </>
-//                       )}
-//                     </span>
-//                   </div>
-//                   {college.reasons.length > 0 && (
-//                     <div className="text-slate-300 text-sm">
-//                       <strong className="text-slate-200">Details:</strong>{" "}
-//                       {college.reasons.join(", ")}
-//                     </div>
-//                   )}
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
 import { useState } from "react";
 import { Calendar, Tag, CheckCircle, XCircle, Search } from "lucide-react";
 
@@ -526,7 +46,6 @@ export default function IPMATChecker() {
     };
 
     const colleges = [
-      // Criteria aligned to the provided table
       {
         name: "IIM Indore (IPM)",
         dobOnOrAfterISO: "2006-08-01",
@@ -549,27 +68,27 @@ export default function IPMATChecker() {
       },
       {
         name: "IIM Rohtak (IPM)",
-        dobOnOrAfterISO: "2006-08-01",
+        dobOnOrAfterISO: "2006-06-30", // ✅ June 30, 2006 (not Aug 1)
         minTenthMarks: 60,
         minTwelfthMarks: 60,
         tenthYearMin: null,
-        twelfthYearMin: 2024,
+        twelfthYearMin: null, // ✅ No 12th year requirement in SS
         twelfthYearAllowed: null,
         requireMathStats: false,
       },
       {
         name: "IIM Jammu (IPM)",
-        dobOnOrAfterISO: null,
+        dobOnOrAfterISO: null, // ✅ No DOB shown in SS
         minTenthMarks: 60,
         minTwelfthMarks: 60,
-        tenthYearMin: 2022,
+        tenthYearMin: 2021, // ✅ 2021 (not 2022)
         twelfthYearMin: 2024,
         twelfthYearAllowed: null,
         requireMathStats: false,
       },
       {
         name: "IIM Bodh Gaya (IPM)",
-        dobOnOrAfterISO: null,
+        dobOnOrAfterISO: null, // ✅ No DOB shown in SS
         minTenthMarks: 60,
         minTwelfthMarks: 60,
         tenthYearMin: 2023,
@@ -579,13 +98,13 @@ export default function IPMATChecker() {
       },
       {
         name: "IIM Amritsar (IPM)",
-        dobOnOrAfterISO: "2006-07-01",
+        dobOnOrAfterISO: "2006-08-01", // ✅ Aug 1 (not July 1)
         minTenthMarks: 60,
         minTwelfthMarks: 60,
         tenthYearMin: null,
         twelfthYearMin: null,
         twelfthYearAllowed: [2025, 2026],
-        requireMathStats: true,
+        requireMathStats: true, // ✅ Stats/Math in 11/12th
       },
       {
         name: "IIFT Kakinada (IPM)",
@@ -595,13 +114,13 @@ export default function IPMATChecker() {
         tenthYearMin: 2022,
         twelfthYearMin: 2024,
         twelfthYearAllowed: null,
-        requireMathStats: true,
+        requireMathStats: true, // ✅ Stats/Math in 11/12th
       },
       {
         name: "IIM Sirmaur (IPM)",
         dobOnOrAfterISO: "2006-08-01",
-        minTenthMarks: null,
-        minTwelfthMarks: null,
+        minTenthMarks: 60, // ✅ 10th: 60%+ shown in SS
+        minTwelfthMarks: 60, // ✅ 12th: 60%+ shown in SS
         tenthYearMin: null,
         twelfthYearMin: 2024,
         twelfthYearAllowed: null,
@@ -615,17 +134,17 @@ export default function IPMATChecker() {
         tenthYearMin: null,
         twelfthYearMin: 2024,
         twelfthYearAllowed: null,
-        requireMathStats: true,
+        requireMathStats: true, // ✅ Stats/Math in 11/12th
       },
       {
         name: "IIM Bangalore UG",
         dobOnOrAfterISO: "2006-08-01",
-        minTenthMarks: 60,
+        minTenthMarks: 60, // ✅ 10th Math: 60%+
         minTwelfthMarks: null,
         tenthYearMin: null,
         twelfthYearMin: 2024,
         twelfthYearAllowed: null,
-        requireMathStats: true,
+        requireMathStats: true, // ✅ Math in 12th (mandatory)
       },
     ];
 
@@ -639,8 +158,8 @@ export default function IPMATChecker() {
           eligible = false;
           reasons.push(
             `DOB must be on/after ${new Date(
-              college.dobOnOrAfterISO
-            ).toLocaleDateString("en-IN")}`
+              college.dobOnOrAfterISO,
+            ).toLocaleDateString("en-IN")}`,
           );
         }
       }
@@ -650,7 +169,7 @@ export default function IPMATChecker() {
         if (Number.isNaN(tenthYear) || tenthYear < college.tenthYearMin) {
           eligible = false;
           reasons.push(
-            `10th passing year must be ${college.tenthYearMin} or later`
+            `10th passing year must be ${college.tenthYearMin} or later`,
           );
         }
       }
@@ -660,7 +179,7 @@ export default function IPMATChecker() {
         if (Number.isNaN(twelfthYear) || twelfthYear < college.twelfthYearMin) {
           eligible = false;
           reasons.push(
-            `12th passing year must be ${college.twelfthYearMin} or later`
+            `12th passing year must be ${college.twelfthYearMin} or later`,
           );
         }
       }
@@ -669,8 +188,8 @@ export default function IPMATChecker() {
           eligible = false;
           reasons.push(
             `12th passing year must be ${college.twelfthYearAllowed.join(
-              " or "
-            )}`
+              " or ",
+            )}`,
           );
         }
       }
@@ -687,7 +206,7 @@ export default function IPMATChecker() {
       if (college.minTwelfthMarks != null) {
         if (twelfthYear === 2026) {
           reasons.push(
-            "12th: Appearing in 2026 (eligibility subject to meeting % criteria)"
+            "12th: Appearing in 2026 (eligibility subject to meeting % criteria)",
           );
         } else if (
           Number.isNaN(twelfthMarks) ||

@@ -8,7 +8,8 @@ export enum ResourceTab {
   DESK = 'From the desk of ClatTribe',
   COLLEGES = 'Know your college',
   VIDEO_HUB = 'Video Hub',
-  CONTACT = 'Contact Us'
+  CONTACT = 'Contact Us',
+  CUET ='Cuet'
 }
 
 export interface CollegeInfo {
@@ -28,8 +29,9 @@ export interface ExamForm {
   startDate: string;
   examName: string;
   examDate: string
-  link: string;
-  status: 'Open' | 'Closed' | 'Coming Soon';
+  links?: { label: string; url: string }[]; 
+  link?: string; 
+  status: 'Open' | 'Closed' | 'Coming Soon' | 'Pre-Apply';
   courses: string;
   endDate: string
 }

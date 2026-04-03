@@ -8,10 +8,10 @@ export const FormsSection: React.FC = () => {
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {FORMS_DATA.map((form, i) => {
-          // Check if form is expired and update status accordingly
           const isExpired = isFormExpired(form.endDate);
           const currentStatus = getFormStatus(form.endDate, form.status);
           const isFormOpen = currentStatus === "Open" && !isExpired;
+          const isFormPreApply = currentStatus === "Pre-Apply" && !isExpired;
 
           return (
             <div
@@ -23,6 +23,14 @@ export const FormsSection: React.FC = () => {
                   <span className="flex h-3 w-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                  </span>
+                </div>
+              )}
+              {isFormPreApply && (
+                <div className="absolute top-0 right-0 p-4">
+                  <span className="flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
                   </span>
                 </div>
               )}
@@ -42,29 +50,52 @@ export const FormsSection: React.FC = () => {
                   <span className="text-slate-500 flex items-center gap-2 font-medium">
                     <AlertCircle className="w-4 h-4" /> Last Date
                   </span>
-                  <span className={`font-bold ${isExpired ? 'text-slate-500 line-through' : 'text-red-400'}`}>
+                  <span className={`font-bold ${isExpired ? "text-slate-500 line-through" : "text-red-400"}`}>
                     {form.endDate}
                   </span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-6 border-t border-slate-800">
-                <span
-                  className={`text-xs font-black uppercase tracking-tighter px-3 py-1 rounded-full ${
-                    isFormOpen
-                      ? "bg-green-500/10 text-green-400"
-                      : "bg-slate-800 text-slate-500"
-                  }`}
-                >
-                  {isExpired && form.status === "Open" ? "Closed" : currentStatus}
-                </span>
-                <button
-                  disabled={!isFormOpen}
-                  onClick={() => window.open(form.link, "_blank")}
-                  className="flex items-center gap-2 text-sm font-bold text-[#f9a01b] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Official Website <ExternalLink className="w-4 h-4" />
-                </button>
+              {/* ── BOTTOM SECTION ── */}
+              <div className="pt-6 border-t border-slate-800">
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className={`text-xs font-black uppercase tracking-tighter px-3 py-1 rounded-full ${
+                      isFormOpen
+                        ? "bg-green-500/10 text-green-400"
+                        : "bg-slate-800 text-slate-500"
+                    }`}
+                  >
+                    {isExpired && form.status == "Open" ? "Closed" : currentStatus}
+                  </span>
+
+                  {/* Single link — shown only when no multi-links */}
+                  {!form.links && form.link && (
+                    <button
+                      disabled={!isFormOpen  && !isFormPreApply}
+                      onClick={() => window.open(form.link, "_blank")}
+                      className="flex items-center gap-2 text-sm font-bold text-[#f9a01b] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Official Website <ExternalLink className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Multi-course links grid — shown for Masters' Union etc. */}
+                {form.links && (
+                  <div className="grid grid-cols-2 gap-2">
+                    {form.links.map((courseLink, idx) => (
+                      <button
+                        key={idx}
+                        disabled={!isFormOpen && !isFormPreApply}
+                        onClick={() => window.open(courseLink.url, "_blank")}
+                        className="flex items-center justify-center gap-1.5 text-xs font-bold text-[#f9a01b] border border-[#f9a01b]/30 hover:bg-[#f9a01b]/10 rounded-xl px-3 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {courseLink.label} <ExternalLink className="w-3 h-3" />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           );

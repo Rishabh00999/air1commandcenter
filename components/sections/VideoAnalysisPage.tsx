@@ -1,394 +1,379 @@
-import { useState } from "react";
-import { Play, X } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Play, X, ChevronDown, Ratio } from "lucide-react";
+
+const CONTENT = {
+  "Quantitative Aptitude": {
+    subcategories: {
+      Strategy: [
+        {
+          id: "eyf981KeOA8", // YouTube video ID extracted from URL
+          title: "Quantitative Ability Strategy - Part 1",
+          url: "https://youtu.be/eyf981KeOA8",
+          description: "Strategic approach to mastering Quantitative Ability",
+        },
+        {
+          id: "Q7lS5zdaOKM",
+          title: "Quantitative Ability Strategy - Part 2",
+          url: "https://youtu.be/Q7lS5zdaOKM",
+          description: "Advanced strategies for Quantitative Ability",
+        },
+      ],
+      "Quadratic Equation": [
+        {
+          id: "3dvDC38kukA",
+          title: "Quadratic Equations Masterclass",
+          url: "https://youtu.be/3dvDC38kukA",
+          description:
+            "Deep dive into quadratic equations concepts and problems",
+        },
+      ],
+      "Profit and Loss": [
+        {
+          id: "L5wwxLYwQSM",
+          title: "Profit and Loss - Part 1",
+          url: "https://youtu.be/L5wwxLYwQSM",
+          description:
+            "Learn the core logic of CP and SP to master Profit and Loss basics instantly.",
+        },
+        {
+          id: "QXd5fFZ9mSA",
+          title: "Profit and Loss - Part 2",
+          url: "https://youtu.be/QXd5fFZ9mSA",
+          description:
+            "Crush complex Profit and Loss problems using these advanced discount and markup shortcuts.",
+        },
+      ],
+      Percentages: [
+        {
+          id: "rDtbng57be8",
+          title: "Percentages - Part 1",
+          url: "https://youtu.be/rDtbng57be8",
+          description: "Additional practice for QA",
+        },
+        {
+          id: "2-BGoksUymk",
+          title: "Percentages - Part 2",
+          url: "https://youtu.be/2-BGoksUymk",
+          description: "Supplementary QA problems",
+        },
+      ],
+      Progressions: [
+        {
+          id: "c1VKEiSGLcU",
+          title: "Progression - Part 1",
+          url: "https://youtu.be/c1VKEiSGLcU",
+          description: "Progressions — Basics.",
+        },
+        {
+          id: "qWqGVkiNG60",
+          title: "Progression - Part 2",
+          url: "https://youtu.be/qWqGVkiNG60",
+          description: "Progressions — AP",
+        },
+        {
+          id: "4aywiBJqxZs",
+          title: "Progression - Part 3",
+          url: "https://youtu.be/4aywiBJqxZs",
+          description: "Progressions — GP",
+        },
+        {
+          id: "SCtG6ALDjuI",
+          title: "Progression - Part 4",
+          url: "https://youtu.be/SCtG6ALDjuI",
+          description: "Progressions — HP",
+        },
+        {
+          id: "2HDvjo5E9gM",
+          title: "Progression - Part 5",
+          url: "https://youtu.be/2HDvjo5E9gM",
+          description: "Progressions — Sum",
+        },
+        {
+          id: "sU4VBKg4glM",
+          title: "Progression - Part 6",
+          url: "https://youtu.be/sU4VBKg4glM",
+          description: "Progressions — AGP",
+        },
+        {
+          id: "Qs0JMVky7lQ",
+          title: "Progression - Part 7",
+          url: "https://youtu.be/Qs0JMVky7lQ",
+          description: "Progressions — Special Series",
+        },
+      ],
+      "Time & Work": [
+        {
+          id: "jSUgGY07RQA",
+          title: "Time & Work - Part 1",
+          url: "https://youtu.be/jSUgGY07RQA",
+          description:
+            "Time & Work Basics: The LCM method secret that replaces long calculations",
+        },
+        {
+          id: "73V09UuGQtw",
+          title: "Time & Work - Part 2",
+          url: "https://youtu.be/73V09UuGQtw",
+          description:
+            "Work and Wages: How to divide money fairly based on individual efficiency",
+        },
+        {
+          id: "_tHLu9uSRmw",
+          title: "Time & Work - Part 3",
+          url: "https://youtu.be/_tHLu9uSRmw",
+          description:
+            "The MDH Formula Explained: Solving 'Men, Days, and Hours' problems in seconds",
+        },
+        {
+          id: "u7T-NwfOR5Y",
+          title: "Time & Work - Part 4",
+          url: "https://youtu.be/u7T-NwfOR5Y",
+          description:
+            "Advanced Time & Work: Mastering negative work and complex group dynamics",
+        },
+      ],
+      Logarithm: [
+        {
+          id: "vaPRVii_w-g",
+          title: "Logarithm - Part 1",
+          url: "https://youtu.be/vaPRVii_w-g",
+          description:
+            "Decoding Logarithms: How to easily switch between exponential and log forms.",
+        },
+        {
+          id: "EZW76uwJvLc",
+          title: "Logarithm - Part 2",
+          url: "https://youtu.be/EZW76uwJvLc",
+          description:
+            "Mastering the Golden Rules: Product, Quotient, and Power laws explained.",
+        },
+        {
+          id: "j9OrMR556-s",
+          title: "Logarithm - Part 3",
+          url: "https://youtu.be/j9OrMR556-s",
+          description:
+            "Advanced Log Hacks: Solving complex equations and the Change of Base formula.",
+        },
+      ],
+      Inequality: [
+        {
+          id: "yE7kiQhcLAk",
+          title: "Inequality - Part 1",
+          url: "https://youtu.be/yE7kiQhcLAk",
+          description:
+            "Mastering the Signs: How to solve basic linear inequalities without making the 'negative' mistake.",
+        },
+        {
+          id: "ixq-Ydo8Zg8",
+          title: "Inequality - Part 2",
+          url: "https://youtu.be/ixq-Ydo8Zg8",
+          description:
+            "Double Trouble: Solving Compound and Absolute Value inequalities like a pro.",
+        },
+        {
+          id: "HIsrMDdffk4",
+          title: "Inequality - Part 3",
+          url: "https://youtu.be/HIsrMDdffk4",
+          description:
+            "Visualizing Math: A complete guide to graphing inequalities on number lines.",
+        },
+        {
+          id: "Ire-nyn_mXg",
+          title: "Inequality - Part 4",
+          url: "https://youtu.be/Ire-nyn_mXg",
+          description: "Modulus",
+        },
+        {
+          id: "5z3ejhCIEG0",
+          title: "Inequality - Part 5",
+          url: "https://youtu.be/5z3ejhCIEG0",
+          description: "Maxima and Minima",
+        },
+      ],
+      Averages: [
+        {
+          id: "fIQ5vUiplMI",
+          title: "Averages, Mixtures and Alligations - Part 1",
+          url: "https://youtu.be/fIQ5vUiplMI",
+          description:
+            "Average Essentials: Shortcuts for consecutive numbers and 'entry/exit' word problems.",
+        },
+        {
+          id: "UYOcqA4K5Xw",
+          title: "Averages, Mixtures and Alligations - Part 2",
+          url: "https://youtu.be/UYOcqA4K5Xw",
+          description:
+            "Replacement and Removal: How to calculate new concentrations when liquids are swapped.",
+        },
+        {
+          id: "E6lsINXnfhU",
+          title: "Averages, Mixtures and Alligations - Part 3",
+          url: "https://youtu.be/E6lsINXnfhU",
+          description:
+            "Alligation Mastery: Applying the cross-method to Profit & Loss, Interest, and Speed.",
+        },
+      ],
+      Ratio: [
+        {
+          id: "Ov_v0cu9Fmc",
+          title: "Ratio, Proportion and Variation - Part 1",
+          url: "https://youtu.be/Ov_v0cu9Fmc",
+          description: "Ratio - Concepts",
+        },
+        {
+          id: "EO5sj8x6o4Q",
+          title: "Ratio, Proportion and Variation - Part 2",
+          url: "https://youtu.be/EO5sj8x6o4Q",
+          description: "Ratio - Practice",
+        },
+        {
+          id: "-XXvRe6Rhwc",
+          title: "Ratio, Proportion and Variation - Part 3",
+          url: "https://youtu.be/-XXvRe6Rhwc",
+          description: "Proportion - Concepts",
+        },
+      ],
+    },
+  },
+
+  "Verbal Ability": {
+    videos: [
+      {
+        id: "wXakzp9DQYo",
+        title: "Verbal Ability Strategy",
+        url: "https://www.youtube.com/watch?v=wXakzp9DQYo",
+        description: "Strategic approach to mastering Verbal Ability",
+      },
+      {
+        id: "CDEWTaMInUA",
+        title: "Verbal Ability Practice",
+        url: "https://www.youtube.com/watch?v=CDEWTaMInUA",
+        description: "In-depth practice session for Verbal Ability",
+      },
+    ],
+  },
+
+  "Logical Reasoning": {
+    videos: [
+      {
+        id: "OHoZwH4XD28",
+        title: "Logical Reasoning Strategy",
+        url: "https://youtu.be/OHoZwH4XD28",
+        description: "Strategic approach to mastering Logical Reasoning",
+      },
+      {
+        id: "AmKrUqMT5Y4",
+        title: "Logical Reasoning Practice - Part 1",
+        url: "https://youtu.be/AmKrUqMT5Y4",
+        description: "In-depth practice session for Logical Reasoning",
+      },
+      {
+        id: "-ncFrTLpDdI",
+        title: "Logical Reasoning Practice - Part 2",
+        url: "https://youtu.be/-ncFrTLpDdI",
+        description: "Logical Reasoning concepts and practice",
+      },
+      {
+        id: "1HErDrnDcDg",
+        title: "Logical Reasoning Practice - Part 3",
+        url: "https://youtu.be/1HErDrnDcDg",
+        description: "Logical Reasoning concepts and practice",
+      },
+      {
+        id: "TXlAEJeOw_M",
+        title: "Logical Reasoning Practice - Part 4",
+        url: "https://youtu.be/TXlAEJeOw_M",
+        description: "Logical Reasoning concepts and practice",
+      },
+      {
+        id: "YbfJdS15R2k",
+        title: "Logical Reasoning Practice - Part 5",
+        url: "https://youtu.be/YbfJdS15R2k",
+        description: "Logical Reasoning concepts and practice",
+      },
+      {
+        id: "KdgWjMNuOb8",
+        title: "Logical Reasoning Practice - Part 6",
+        url: "https://youtu.be/KdgWjMNuOb8",
+        description: "Logical Reasoning concepts and practice",
+      },
+      {
+        id: "0y6FExnmmSo",
+        title: "Logical Reasoning Practice - Part 7",
+        url: "https://youtu.be/0y6FExnmmSo",
+        description: "Logical Reasoning concepts and practice",
+      },
+      {
+        id: "0RH1Rca8GlM",
+        title: "Logical Reasoning Practice - Part 8",
+        url: "https://youtu.be/0RH1Rca8GlM",
+        description: "Logical Reasoning concepts and practice",
+      },
+      {
+        id: "J66BMKToX0c",
+        title: "Logical Reasoning Practice - Part 9",
+        url: "https://youtu.be/J66BMKToX0c",
+        description: "Logical Reasoning concepts and practice",
+      },
+    ],
+  },
+};
+// ============================================================
+
+const extractVideoId = (url) => {
+  const regExp =
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|live\/|shorts\/)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
+};
+
+const FALLBACK_THUMB =
+  'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect fill="%23823588" width="100" height="100"/%3E%3Ctext x="50" y="50" font-size="8" text-anchor="middle" dy=".3em" fill="white"%3EVideo%3C/text%3E%3C/svg%3E';
 
 export default function Component() {
-  const videos = [
-    {
-      id: 7,
-      title: "Quantitative Ability Strategy - Part 1",
-      url: "https://youtu.be/eyf981KeOA8",
-      description: "Strategic approach to mastering Quantitative Ability",
-      category: "Quantitative Aptitude",
-      subcategory: "Strategy",
-    },
-    {
-      id: 8,
-      title: "Quantitative Ability Strategy - Part 2",
-      url: "https://youtu.be/Q7lS5zdaOKM",
-      description: "Advanced strategies for Quantitative Ability",
-      category: "Quantitative Aptitude",
-      subcategory: "Strategy",
-    },
-    {
-      id: 9,
-      title: "Quadratic Equations Masterclass",
-      url: "https://youtu.be/3dvDC38kukA",
-      description: "Deep dive into quadratic equations concepts and problems",
-      category: "Quantitative Aptitude",
-      subcategory: "Quadratic Equation",
-    },
-    {
-      id: 10,
-      title: "Profit and Loss - Part 1",
-      url: "https://youtu.be/bqVyQ3HBrOg",
-      description: "Fundamental concepts of Profit and Loss",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 11,
-      title: "Profit and Loss - Part 2",
-      url: "https://youtu.be/YZMDCFTKFfM",
-      description: "Advanced problems in Profit and Loss",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 12,
-      title: "Profit and Loss - Part 3",
-      url: "https://youtu.be/7PS5XjmvCUE",
-      description: "Profit and Loss practice session",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 13,
-      title: "Profit and Loss - Part 4",
-      url: "https://youtu.be/QlLp-9OC4cM",
-      description: "Solving complex Profit and Loss questions",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 14,
-      title: "Profit and Loss - Part 5",
-      url: "https://youtu.be/k65D2Hds_NA",
-      description: "Key strategies for Profit and Loss",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 15,
-      title: "Profit and Loss - Part 6",
-      url: "https://youtu.be/GXD7Oy0Om-A",
-      description: "Expert tips on Profit and Loss",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 16,
-      title: "Profit and Loss - Part 7",
-      url: "https://youtu.be/LALOnfFNZw0",
-      description: "Profit and Loss detailed analysis",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 17,
-      title: "Profit and Loss - Part 8",
-      url: "https://youtu.be/HFRitg-WP5w",
-      description: "Mastering Profit and Loss techniques",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 18,
-      title: "Profit and Loss - Part 9",
-      url: "https://youtu.be/kyHih58qXiE",
-      description: "Profit and Loss exam-style questions",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 19,
-      title: "Profit and Loss - Part 10",
-      url: "https://youtu.be/80qyYOvl3Rk",
-      description: "Important Profit and Loss concepts",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 20,
-      title: "Profit and Loss - Part 11",
-      url: "https://youtu.be/s4eh5zCbhHU",
-      description: "Profit and Loss revision",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 21,
-      title: "Profit and Loss - Part 12",
-      url: "https://youtu.be/avUC8JUYe98",
-      description: "Profit and Loss walkthrough",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 22,
-      title: "Profit and Loss - Part 13",
-      url: "https://youtu.be/IdIBDdx0Q84",
-      description: "Profit and Loss solution strategies",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 23,
-      title: "Profit and Loss - Part 14",
-      url: "https://youtu.be/ps5o47GlS_c",
-      description: "Profit and Loss deep dive",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 24,
-      title: "Profit and Loss - Part 15",
-      url: "https://youtu.be/h9A16WIMDDc",
-      description: "Profit and Loss comprehensive guide",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 25,
-      title: "Profit and Loss - Part 16",
-      url: "https://youtu.be/g4VIisjj8z4",
-      description: "Profit and Loss problem solving",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 26,
-      title: "Profit and Loss - Part 17",
-      url: "https://youtu.be/t73Mq-tfHlI",
-      description: "Profit and Loss advanced techniques",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 27,
-      title: "Profit and Loss - Part 18",
-      url: "https://youtu.be/HIRuCORxBec",
-      description: "Profit and Loss final review",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 28,
-      title: "Profit and Loss - Part 19",
-      url: "https://youtu.be/ZIaKnDqZ3cg",
-      description: "Profit and Loss exam prep",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 29,
-      title: "Profit and Loss - Part 20",
-      url: "https://youtu.be/a8c0QrA6GlU",
-      description: "Profit and Loss essential tips",
-      category: "Quantitative Aptitude",
-      subcategory: "Profit and Loss",
-    },
-    {
-      id: 30,
-      title: "Quantitative Aptitude - Extra 1",
-      url: "https://youtu.be/jpTFv9jjrw8",
-      description: "Additional practice for QA",
-      category: "Quantitative Aptitude",
-      subcategory: "Additional",
-    },
-    {
-      id: 31,
-      title: "Quantitative Aptitude - Extra 2",
-      url: "https://youtu.be/dWZ7Il9ulug",
-      description: "Supplementary QA problems",
-      category: "Quantitative Aptitude",
-      subcategory: "Additional",
-    },
-    {
-      id: 32,
-      title: "Quantitative Aptitude - Extra 3",
-      url: "https://youtu.be/OC18v4JIAtU",
-      description: "More QA concepts explained",
-      category: "Quantitative Aptitude",
-      subcategory: "Additional",
-    },
-    {
-      id: 33,
-      title: "Quantitative Aptitude - Extra 4",
-      url: "https://youtu.be/A7YdgwCT8to",
-      description: "Final set of QA questions",
-      category: "Quantitative Aptitude",
-      subcategory: "Additional",
-    },
-    {
-      id: 34,
-      title: "Verbal Ability Strategy",
-      url: "https://www.youtube.com/watch?v=wXakzp9DQYo",
-      description: "Strategic approach to mastering Verbal Ability",
-      category: "Verbal Ability",
-    },
-    {
-      id: 35,
-      title: "Verbal Ability Practice",
-      url: "https://www.youtube.com/watch?v=CDEWTaMInUA",
-      description: "In-depth practice session for Verbal Ability",
-      category: "Verbal Ability",
-    },
-    {
-      id: 36,
-      title: "Logical Reasoning Strategy",
-      url: "https://youtu.be/OHoZwH4XD28",
-      description: "Strategic approach to mastering Logical Reasoning",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 37,
-      title: "Logical Reasoning Practice - Part 1",
-      url: "https://youtu.be/AmKrUqMT5Y4",
-      description: "In-depth practice session for Logical Reasoning",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 38,
-      title: "Logical Reasoning Practice - Part 2",
-      url: "https://youtu.be/-ncFrTLpDdI",
-      description: "Logical Reasoning concepts and practice",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 39,
-      title: "Logical Reasoning Practice - Part 3",
-      url: "https://youtu.be/1HErDrnDcDg",
-      description: "Logical Reasoning concepts and practice",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 40,
-      title: "Logical Reasoning Practice - Part 4",
-      url: "https://youtu.be/TXlAEJeOw_M",
-      description: "Logical Reasoning concepts and practice",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 41,
-      title: "Logical Reasoning Practice - Part 5",
-      url: "https://youtu.be/YbfJdS15R2k",
-      description: "Logical Reasoning concepts and practice",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 42,
-      title: "Logical Reasoning Practice - Part 6",
-      url: "https://youtu.be/KdgWjMNuOb8",
-      description: "Logical Reasoning concepts and practice",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 43,
-      title: "Logical Reasoning Practice - Part 7",
-      url: "https://youtu.be/0y6FExnmmSo",
-      description: "Logical Reasoning concepts and practice",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 44,
-      title: "Logical Reasoning Practice - Part 8",
-      url: "https://youtu.be/0RH1Rca8GlM",
-      description: "LogiAmKrUqMT5Y7cal Reasoning concepts and practice",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 45,
-      title: "Logical Reasoning Practice - Part 9",
-      url: "https://youtu.be/J66BMKToX0c",
-      description: "Logical Reasoning concepts and practice",
-      category: "Logical Reasoning",
-    },
-    {
-      id: 46,
-      title: "Progression - Part 1",
-      url: "https://youtu.be/c1VKEiSGLcU",
-      description: "Progressions — Basics.",
-      category: "Quantitative Aptitude",
-      subcategory: "Progressions",
-    },
-    {
-      id: 47,
-      title: "Progression - Part 2",
-      url: "https://youtu.be/qWqGVkiNG60",
-      description: "Progressions — AP",
-      category: "Quantitative Aptitude",
-      subcategory: "Progressions",
-    },
-    {
-      id: 48,
-      title: "Progression - Part 3",
-      url: "https://youtu.be/4aywiBJqxZs",
-      description: "Progressions — GP",
-      category: "Quantitative Aptitude",
-      subcategory: "Progressions",
-    },
-    {
-      id: 49,
-      title: "Progression - Part 4",
-      url: "https://youtu.be/SCtG6ALDjuI",
-      description: "Progressions — HP",
-      category: "Quantitative Aptitude",
-      subcategory: "Progressions",
-    },
-    {
-      id: 50,
-      title: "Progression - Part 5",
-      url: "https://youtu.be/2HDvjo5E9gM",
-      description: "Progressions — Sum",
-      category: "Quantitative Aptitude",
-      subcategory: "Progressions",
-    },
-    {
-      id: 51,
-      title: "Progression - Part 6",
-      url: "https://youtu.be/sU4VBKg4glM",
-      description: "Progressions — AGP",
-      category: "Quantitative Aptitude",
-      subcategory: "Progressions",
-    },
-  ];
+  const categories = Object.keys(CONTENT);
 
+  const [activeTab, setActiveTab] = useState(categories[0]);
+  const [activeSubTab, setActiveSubTab] = useState(() => {
+    const first = CONTENT[categories[0]];
+    return first.subcategories ? Object.keys(first.subcategories)[0] : null;
+  });
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [activeTab, setActiveTab] = useState("Quantitative Aptitude");
-  const [activeSubTab, setActiveSubTab] = useState("Strategy");
+  const dropdownRef = useRef(null);
 
-  const categories = [
-    "Quantitative Aptitude",
-    "Verbal Ability",
-    "Logical Reasoning",
-  ];
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target))
+        setDropdownOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
-  const quantSubcategories = [
-    "Strategy",
-    "Quadratic Equation",
-    // "Profit and Loss",
-    // "Additional",
-    "Progressions",
-  ];
+  const currentCategoryData = CONTENT[activeTab];
+  const hasSubcategories = !!currentCategoryData.subcategories;
+  const subcategoryNames = hasSubcategories
+    ? Object.keys(currentCategoryData.subcategories)
+    : [];
 
-  const filteredVideos =
-    activeTab === "Quantitative Aptitude"
-      ? videos.filter(
-          (video) =>
-            video.category === activeTab && video.subcategory === activeSubTab
-        )
-      : videos.filter((video) => video.category === activeTab);
+  const filteredVideos = hasSubcategories
+    ? (currentCategoryData.subcategories[activeSubTab] ?? [])
+    : (currentCategoryData.videos ?? []);
 
-  const extractVideoId = (url) => {
-    const regExp =
-      /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|live\/|shorts\/)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return match && match[2].length === 11 ? match[2] : null;
+  const handleTabChange = (cat) => {
+    setActiveTab(cat);
+    setDropdownOpen(false);
+    const data = CONTENT[cat];
+    setActiveSubTab(
+      data.subcategories ? Object.keys(data.subcategories)[0] : null,
+    );
   };
 
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="relative max-w-7xl mx-auto px-4 pt-8 pb-12">
+        {/* Header */}
         <div className="text-center space-y-4 mb-12">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white mt-2">
             Master Your <span className="text-purple-400">Preparation</span>
@@ -399,51 +384,72 @@ export default function Component() {
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {categories.map((category) => (
+        {/* Category tabs — auto-generated from CONTENT keys */}
+        <div className="flex flex-wrap justify-center gap-4 mb-8 ">
+          {categories.map((cat) => (
             <button
-              key={category}
-              onClick={() => {
-                setActiveTab(category);
-                if (category === "Quantitative Aptitude") {
-                  setActiveSubTab("Strategy");
-                }
-              }}
+              key={cat}
+              onClick={() => handleTabChange(cat)}
               className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
-                activeTab === category
+                activeTab === cat
                   ? "bg-purple-600 text-white shadow-lg shadow-purple-500/30 scale-105"
                   : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white border border-gray-700"
               }`}
             >
-              {category}
+              {cat}
             </button>
           ))}
         </div>
 
-        {activeTab === "Quantitative Aptitude" && (
-          <div className="flex flex-wrap justify-center gap-3 mb-8">
-            {quantSubcategories.map((subcategory) => (
+        {/* Subcategory dropdown — only shown when category has subcategories */}
+        {hasSubcategories && (
+          <div className="flex justify-center mb-8 ">
+            <div className="relative" ref={dropdownRef}>
               <button
-                key={subcategory}
-                onClick={() => setActiveSubTab(subcategory)}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
-                  activeSubTab === subcategory
-                    ? "bg-yellow-500 text-gray-900 shadow-md"
-                    : "bg-gray-700 text-gray-300 hover:bg-gray-600 border border-gray-600"
-                }`}
+                onClick={() => setDropdownOpen((p) => !p)}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-800 border border-gray-600 text-white text-sm font-semibold hover:border-yellow-500 hover:bg-gray-700 transition-all duration-200 shadow-md min-w-[220px] justify-between"
               >
-                {subcategory}
+                <span>{activeSubTab}</span>
+                <ChevronDown
+                  className={`w-4 h-4 text-yellow-400 transition-transform duration-200 ${
+                    dropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
-            ))}
+
+              {dropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-full bg-gray-800 border border-gray-700 rounded-xl shadow-2xl shadow-black/40 z-20 overflow-hidden overflow-y-auto max-h-60">
+                  {subcategoryNames.map((sub, idx) => (
+                    <button
+                      key={sub}
+                      onClick={() => {
+                        setActiveSubTab(sub);
+                        setDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-5 py-2.5 text-sm font-medium transition-all duration-150
+                        ${idx !== subcategoryNames.length - 1 ? "border-b border-gray-700" : ""}
+                        ${
+                          activeSubTab === sub
+                            ? "bg-yellow-500 text-gray-900"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                        }`}
+                    >
+                      {sub}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
 
+        {/* Video grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredVideos.map((video, index) => {
             const videoId = extractVideoId(video.url);
             const thumbnailUrl = videoId
               ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-              : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect fill="%23823588" width="100" height="100"/%3E%3Ctext x="50" y="50" font-size="8" text-anchor="middle" dy=".3em" fill="white"%3EVideo%3C/text%3E%3C/svg%3E';
+              : FALLBACK_THUMB;
 
             return (
               <div
@@ -463,11 +469,9 @@ export default function Component() {
                     alt={video.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.currentTarget.src =
-                        'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Crect fill="%23823588" width="100" height="100"/%3E%3Ctext x="50" y="50" font-size="8" text-anchor="middle" dy=".3em" fill="white"%3EVideo%3C/text%3E%3C/svg%3E';
+                      e.currentTarget.src = FALLBACK_THUMB;
                     }}
                   />
-
                   <div className="absolute inset-0 flex items-center justify-center group-hover:opacity-100 transition-opacity duration-300">
                     <div className="w-16 h-16 rounded-full bg-yellow-400 flex items-center justify-center transform hover:scale-110 transition-transform duration-300 shadow-lg">
                       <Play
@@ -491,16 +495,7 @@ export default function Component() {
           })}
         </div>
 
-        {(activeTab === "Verbal Ability" ||
-          activeTab === "Logical Reasoning") &&
-          filteredVideos.length > 0 && (
-            <div className="text-center mt-12 mb-8">
-              <p className="text-lg font-medium text-gray-400">
-                More videos coming soon...
-              </p>
-            </div>
-          )}
-
+        {/* Empty state */}
         {filteredVideos.length === 0 && (
           <div className="text-center py-20">
             <div className="inline-block p-6 rounded-full bg-gray-800 mb-4">
@@ -509,13 +504,12 @@ export default function Component() {
             <p className="text-xl font-semibold text-white mb-2">
               No videos available
             </p>
-            <p className="text-gray-400">
-              Check back soon for new analysis sessions
-            </p>
+            <p className="text-gray-400">Check back soon for new sessions</p>
           </div>
         )}
       </div>
 
+      {/* Video modal */}
       {selectedVideo && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="relative w-full max-w-5xl bg-gray-800 rounded-xl overflow-hidden shadow-2xl">
@@ -525,7 +519,6 @@ export default function Component() {
             >
               <X className="w-6 h-6" />
             </button>
-
             <div className="p-4 border-b border-gray-700">
               <h2 className="text-xl font-bold text-white">
                 {selectedVideo.title}
@@ -536,12 +529,9 @@ export default function Component() {
                 </p>
               )}
             </div>
-
             <div className="aspect-video">
               <iframe
-                src={`https://www.youtube.com/embed/${extractVideoId(
-                  selectedVideo.url
-                )}?autoplay=1`}
+                src={`https://www.youtube.com/embed/${extractVideoId(selectedVideo.url)}?autoplay=1`}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

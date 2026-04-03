@@ -14,7 +14,13 @@ export const ResourceTabs: React.FC<Props> = ({ activeTab, setActiveTab }) => {
       {RESOURCE_TABS.map((tab) => (
         <button
           key={tab.id}
-          onClick={() => setActiveTab(tab.id as ResourceTab)}
+          onClick={() => {
+            if (tab.link) {
+              window.open(tab.link, "_blank");
+              return;
+            }
+            setActiveTab(tab.id as ResourceTab);
+          }}
           className={`relative group flex items-center gap-1 px-3 py-1.5 rounded-2xl whitespace-nowrap transition-all duration-300 border ${
             activeTab === tab.id
               ? "bg-slate-900 border-[#823588] text-white"
