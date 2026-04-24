@@ -42,6 +42,18 @@ export const TopNav: React.FC = () => {
             >
               Results
             </a>
+            <a
+              href="https://preptribe.getedunext.com"
+              className="hover:text-white transition-colors"
+            >
+              CUET
+            </a>
+            <a
+              href="https://register.ipmcareer.com/dsbchallenge"
+              className="hover:text-white transition-colors"
+            >
+              DSB Challenge
+            </a>
           </div>
 
           <div className="hidden md:block h-6 w-px bg-slate-800"></div>

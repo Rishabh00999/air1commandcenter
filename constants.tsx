@@ -99,12 +99,6 @@ export const RESOURCE_TABS = [
     icon: <Contact className="w-5 h-5" />,
     label: "Contact Us",
   },
-  {
-    id: ResourceTab.CUET,
-    icon: <BookOpen className="w-5 h-5" />,
-    label: "CUET",
-    link: "https://preptribe.getedunext.com"
-  },
 ];
 
 export const FORMS_DATA: ExamForm[] = [
@@ -132,7 +126,7 @@ export const FORMS_DATA: ExamForm[] = [
   {
     name: "Masters' Union",
     startDate: "To be announced",
-    endDate: "31st March '2026",
+    endDate: "10th June '2026",
     examName: "Masters' Union Entrance",
     examDate: "Coming Soon",
     status: "Open",
@@ -170,7 +164,7 @@ export const FORMS_DATA: ExamForm[] = [
   {
     name: "IIFT",
     startDate: "To be announced",
-    endDate: "20th April '26",
+    endDate: "26th April '26",
     examName: "IPMAT Indore",
     examDate: "4th May '2026",
     status: "Open",
@@ -220,11 +214,11 @@ export const FORMS_DATA: ExamForm[] = [
   {
     name: "IIM Jammu",
     startDate: "To be announced",
-    endDate: "To be announced",
+    endDate: "11th May '2026",
     examName: "JIPMAT",
     examDate: "Coming Soon",
-    status: "Coming Soon",
-    link: "—",
+    status: "Open",
+    link: "https://examinationservices.nic.in/ExamSys26Part2/root/Home.aspx?enc=Ei4cajBkK1gZSfgr53ImFYIsjsAFC5allEdi8zWjhNlaMb/g70yJtxEs2NI2c8ln",
     courses: "IPM (5-Years)",
   },
   {
@@ -233,18 +227,18 @@ export const FORMS_DATA: ExamForm[] = [
     endDate: "To be announced",
     examName: "JIPMAT",
     examDate: "Coming Soon",
-    status: "Coming Soon",
-    link: "—",
+    status: "Open",
+    link: "https://examinationservices.nic.in/ExamSys26Part2/root/Home.aspx?enc=Ei4cajBkK1gZSfgr53ImFYIsjsAFC5allEdi8zWjhNlaMb/g70yJtxEs2NI2c8ln",
     courses: "IPM (5-Years)",
   },
   {
     name: "IIM Bangalore (BBA DBE)",
     startDate: "To be announced",
-    endDate: "To be announced",
+    endDate: "30th June 2026",
     examName: "IIMB DBE Entrance Test",
     examDate: "Coming Soon",
-    status: "Pre-Apply",
-    link: "https://dbe.iimb.ac.in/register-your-interest/",
+    status: "Open",
+    link: "https://admissions.dbe.iimb.ac.in/login",
     courses: "BBA in Digital Business & Entrepreneurship",
   },
   {
@@ -270,12 +264,31 @@ export const FORMS_DATA: ExamForm[] = [
   {
     name: "IIM Sambalpur",
     startDate: "To be announced",
-    endDate: "To be announced",
+    endDate: "31st May, 2026",
     examName: "IPMAT Indore",
     examDate: "11th to 31st May 2026",
     status: "Coming Soon",
-    link: "https://examinationservices.nic.in/ExamSysCUETUG26/root/Home.aspx?enc=Ei4cajBkK1gZSfgr53ImFYsjZOdyj8DuPcxGBqAK2DwPXgGzSvy8OkvXqQJ0Bni9",
+    links: [
+      {
+        label: "B.S. in Data Science & AI: ",
+        url: "https://registration.iimsambalpur.ac.in/portal/SignIn/DSAI",
+      },
+      {
+        label: "B.S. in Management and Public Policy Programme: ",
+        url: "https://registration.iimsambalpur.ac.in/portal/SignIn/MPPolicy",
+      },
+    ],
     courses: "B.S. in Management & Public Policy (4-Years)",
+  },
+  {
+    name: "IIM Udaipur",
+    startDate: "To be announced",
+    endDate: "31st May '2026",
+    examName: "On the basis of class 12th scores",
+    examDate: "11th to 31st May 2026",
+    status: "Open",
+    link: "https://workflow.bba.iimu.ac.in/auth/login",
+    courses: "On the basis of class 12th scores",
   },
   {
     name: "NALSAR",
@@ -300,11 +313,20 @@ export const FORMS_DATA: ExamForm[] = [
   {
     name: "Christ University Entrance Test",
     startDate: "To be announced",
-    endDate: "April 06, 2026",
+    endDate: "3rd May '2026",
     examName: "Christ University Entrance Test (CUET)",
     examDate: "13th March '2026",
     status: "Open",
-    link: "https://espro.christuniversity.in/Application/",
+    links: [
+      {
+        label: "IPM",
+        url: " https://espro.christuniversity.in/Application/",
+      },
+      {
+        label: "BBA",
+        url: "https://espro.christuniversity.in/Application/",
+      },
+    ],
     courses: "BBA / BBA (Hons)",
   },
   {
@@ -320,20 +342,11 @@ export const FORMS_DATA: ExamForm[] = [
   {
     name: "TAPMI",
     startDate: "To be announced",
-    endDate: "15th April '2026",
+    endDate: "2nd May '2026",
     examName: "IPMAT, JIPMAT, JEE, SAT, CLAT, MET",
     examDate: "Coming Soon",
     status: "Open",
-    links: [
-      {
-        label: "IPM",
-        url: "https://apply.manipal.edu/login?ec=302&startURL=%2F",
-      },
-      {
-        label: "BBA",
-        url: "https://apply.manipal.edu/login?ec=302&startURL=%2F",
-      },
-    ],
+    link: "https://apply.manipal.edu/login?ec=302&startURL=%2F",
     courses: "IPM (5-Years) / BBA (Hons) – (4-Years)",
   },
   {
@@ -427,7 +440,7 @@ export const FORMS_DATA: ExamForm[] = [
   {
     name: "UPES",
     startDate: "To be announced",
-    endDate: "31st March '26",
+    endDate: "10th June '2026",
     examName: "UPESMET-UG / UGAT CUET",
     examDate: "Coming Soon",
     status: "Open",
